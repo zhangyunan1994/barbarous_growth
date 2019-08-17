@@ -1,23 +1,12 @@
-# barbarous_growth
+# barbarous growth
 野蛮生长
-
-# Growth
-
-Your good friend, an amateur writer, is full of energy and ready to write again.
-
-Over the next year, a hundred articles will be planned to meet with you.
-
-Watch this space!
-
-> 我好像是一个在海边玩耍的孩子，不时为拾到比通常更光滑的石子或更美丽的 贝壳而欢欣鼓舞，而展现在我面前的是完全未探明的真理之海。
 
 **Table of Contents**
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
 
-- [barbarous_growth](#barbarousgrowth)
-- [Growth](#growth)
+- [barbarous growth](#barbarous-growth)
 - [学习资料](#%e5%ad%a6%e4%b9%a0%e8%b5%84%e6%96%99)
 - [入门](#%e5%85%a5%e9%97%a8)
 - [中级篇](#%e4%b8%ad%e7%ba%a7%e7%af%87)
@@ -191,5 +180,5 @@ Watch this space!
 14. Linux命令行与shell脚本编程大全
 
 ---
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">growth</span> 由 <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">777</span> 采用 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享 署名-相同方式共享 4.0 国际 许可协议</a>进行许可。
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">barbarous growth</span> 由 <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">777</span> 采用 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享 署名-相同方式共享 4.0 国际 许可协议</a>进行许可。
 
