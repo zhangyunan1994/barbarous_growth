@@ -17,19 +17,19 @@
 ------------------------------
 <span id="java">Java基础</span>
 -------------------------------
-Redis
------
-算法相关
+<span id="redis">Redis</span>
+------------------------------
+<span id="算法">算法相关</span>
 -------
-JVM相关
+<span id="jvm">JVM相关</span>
 -------
-Spring Cloud
+<span id="sc">Spring Cloud</span>
 ------------
-消息队列
+<span id="mq">消息队列</span>
 -------
-分布式架构
+<span id="fbs">分布式架构</span>
 ---------
-计算机网络
----------
-Mybatis
+<span id="network">计算机网络</span>
+-----------------------------------
+<span id="mybatis">Mybatis</span>
 -------
