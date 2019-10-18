@@ -27,18 +27,18 @@ HashMap
             这也是为何hashMap的初始长度默认16的原因，如果将HashMap的长度调整为10，则会出现某些index不会出现，而某些index会重复出现的情况。
             解决hash冲突的办法还有4中，分别是：(1)开放定址法(2)链地址法(3)再哈希法(4)公共溢出区域法。
             其中底层使用基本数组来确定桶的位置是因为速度要比链表快，至于为何不使用ArrayList，因为使用基本数组可以自定义扩容机制，HashMap中数组扩容刚好是2的次幂，在进行位运算时的效率高。 而ArrayList的扩容机制是1.5倍扩容，在此并不适用。还有其他的一些相关问题：
-            #1.HashMap会在什么情况下进行扩容？
-            如果bucket满了(超过load factor*current capacity)，就要resize。 load factor为0.75，为了最大程度避免哈希冲突 current capacity为当前数组大小。
-            #2.为什么扩容是2的幂次方？
+            # 1.HashMap会在什么情况下进行扩容？
+            如果bucket满了(超过load factor X current capacity)，就要resize。 load factor为0.75，为了最大程度避免哈希冲突 current capacity为当前数组大小。
+            # 2.为什么扩容是2的幂次方？
             HashMap为了存取高效，尽量减小数据间的碰撞，将数据能够较为平均的分布，使得每个链表的长度基本相等，hashmap中函数采用的是位运算进行计算桶的位置（hash&(length-1)。 也就是说hash%length==hash&(length-1)），效果等同于取模，但是如果扩容的长度为整10的倍数，则可能会产生某些index永远不会产生，而有些index则会长度过长的问题。
-            #3.说说String中hashcode的实现?
+            # 3.说说String中hashcode的实现?
             顺道提一下hash算法，是将一个大范围的数映射到一个较小的范围，依次来节省资源和空间。String的hashcode算法如下：
             public int hashCode() {
             int h = hash;
             if (h == 0 && value.length > 0) {
                   char val[] = value;
                   for (int i = 0; i < value.length; i++) {
-                           h = 31 * h + val[i];
+                           h = 31 X h + val[i];
                    }
                    hash = h;
             }
@@ -46,21 +46,21 @@ HashMap
 }
        String类中的hashCode计算方法还是比较简单的，就是以31为权，每一位为字符的ASCII值进行运算，用自然溢出来等效取模。
 那为什么以31为质数呢？主要是因为31是一个奇质数，所以31*i=32*i-i=(i<<5)-i，这种位移与减法结合的计算相比一般的运算快很多（不懂）。
-           #4.为什么hashmap在链表的长度超过8时会将链表转化为红黑树？
+           # 4.为什么hashmap在链表的长度超过8时会将链表转化为红黑树？
            关于这个问题，首先要知道在jdk 1.8中对HashMap做了哪些优化。
            +将原先的HashMap由数组+链表转化成为了数组+链表+红黑树，详情见上述。
            +优化了高位运算的hash算法：h^(h>>>16)。
            +扩容后，元素要么是在原位置，要么是在原位置再移动2次幂的位置，且链表顺序不变，且以此解决了HashMap的死循环问题。
            至于为什么设置为链表的长度超过8时会转化为红黑树，答案就是不知道。
-           #5.HashMap在高并发编程的情况下可能会有哪些问题。
+           # 5.HashMap在高并发编程的情况下可能会有哪些问题。
            +(1)多线程扩容，引起的死循环问题。
            +(2)多线程put的时候可能导致元素丢失。
            +(3)put非null元素后get出来的却是null。
            其中问题（1）已经在jdk 1.8以后的版本中解决，不会出现死循环的问题。另外的两个问题可以使用ConcurrentHashmap，Hashtable等线程安全等集合类进行解决。
-           #6.一般来说，用什么作为HashMap的key？
+           # 6.一般来说，用什么作为HashMap的key？
            首先，HashMap的key可以为null，在key为null的时候，会放在数组的第一个位置，一般用Integer、String这种不可变类当HashMap当key，而且String最为常用，有两个原因：
-           +(1)因为字符串是不可变的，所以在它创建的时候hashcode就被缓存了，不需要重新计算。这就使得字符串很适合作为Map中的键，字符串的处理速度要快过其它的键对象。这就是HashMap中的键往往都使用字符串。
-           +(2)因为获取对象的时候要用到equals()和hashCode()方法，那么键对象正确的重写这两个方法是非常重要的,这些类已经很规范的覆写了hashCode()以及equals()方法。
+           + (1)因为字符串是不可变的，所以在它创建的时候hashcode就被缓存了，不需要重新计算。这就使得字符串很适合作为Map中的键，字符串的处理速度要快过其它的键对象。这就是HashMap中的键往往都使用字符串。
+           + (2)因为获取对象的时候要用到equals()和hashCode()方法，那么键对象正确的重写这两个方法是非常重要的,这些类已经很规范的覆写了hashCode()以及equals()方法。
 
 
 
