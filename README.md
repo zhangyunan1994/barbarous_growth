@@ -54,8 +54,8 @@
 * 数据结构与算法
 * 面向对象编程
 * 网络通信协议，如TCP / Socket
-* linux 常用命令以及环境搭建
-* [Spring 篇](it/Spring/)
+* [linux 常用命令以及环境搭建](./information/linux)
+* [Spring 篇](./information/spring/)
 
 # 高级篇
 
@@ -64,18 +64,18 @@
 * 领域驱动设计
 * MVC架构
 * 运行环境优化，如JVM
-* [设计模式](it/designPattern/)
+* [设计模式](./information/designPatten/)
 * 事务,如多数据源事务、分布式事务
     
 # 工程化
 
-* 版本管理 GIT、SVN
+* 版本管理 [GIT](./information/git/)、SVN
 * 单元测试
-* 包管理 maven、gradle、pip、venv
+* 包管理 [maven](./information/dependencyManagement/Maven/)、gradle、pip、venv
 
 # 基础设施
 
-* 虚拟化，如Docker
+* 虚拟化，如[Docker](./information/docker/)
 * 自动化部署
 * 应用包创建、管理、发布
 * 发布脚本编写
@@ -134,14 +134,14 @@
 # 消息
 
 * JMS
-* activemq
+* [ActiveMQ](./information/mq/ActiveMQ/)
 * kafka
 * rabbitmq
 * rokt
 
 # 面试相关
 
-[详见](interview/)
+[详见](./interview/)
 
 # 项目推荐
 
