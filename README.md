@@ -141,7 +141,7 @@
 
 # 面试相关
 
-[详见](it/interview/)
+[详见](interview/)
 
 # 项目推荐
 
