@@ -41,7 +41,7 @@
 
 # 入门
 
-* 编程语言：Java / Python / C++ / Go / 等等
+* 编程语言：[Java](./information/language/java) / Python / C++ / Go / 等等
 * Web框架，如Spring MVC、Flask、Django等等
 * ORM框架，如Spring JDBC、Mybatis、Hibernate、JPA、jade、sqlalchemy、django orm
 * HTTP协议基础
