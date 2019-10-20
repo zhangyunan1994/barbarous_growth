@@ -151,7 +151,7 @@
 
 # 参考书籍和资料
 
-> 详细列表 [详情](./books.md)
+> [书籍列表](./information/books.md)
 
 1. 算法导论 第三版
 2. 收获，不知Oracle
