@@ -176,6 +176,11 @@ equals()：用来比较方法两个对象的内容是否相等。
 List 用来存储有序序列，Set用来存储无序集合，List中存放的数据是可重复的，Set存放的数据是唯一的
 
 ### List 和 Map 区别
+
+List：是存储单列数据的集合，存储的数据是有序并且是可以重复的。
+
+Map：存储双列数据的集合，通过键值对存储数据，存储 的数据是无序的，Key值不能重复，value值可以重复。
+
 ### Arraylist 与 LinkedList 区别
 
 最明显的区别是 ArrrayList底层的数据结构是数组，支持随机访问，而 LinkedList 的底层数据结构是双向循环链表，不支持随机访问。使用下标访问一个元素，ArrayList 的时间复杂度是 O(1)，而 LinkedList 是 O(n)。
@@ -188,8 +193,43 @@ List 用来存储有序序列，Set用来存储无序集合，List中存放的�
 
 
 ### ArrayList 与 Vector 区别
+
+1）Vector的方法都是同步的(Synchronized),是线程安全的(thread-safe)，而ArrayList的方法不是，由于线程的同步必然要影响性能，因此,ArrayList的性能比Vector好。  
+2）当Vector或ArrayList中的元素超过它的初始大小时,Vector会将它的容量翻倍,而ArrayList只增加50%的大小，这样,ArrayList就有利于节约内存空间。
+
 ### HashMap 和 Hashtable 的区别
+
+1. 两者所继承的父类不同。
+   
+   Hashtable继承自Dictionary类，而HashMap继承自AbstractMap类。但二者都实现了Map接口。
+
+2. 线程安全性不同
+
+    先说结论， Hashtable 线程安全，HashMap线程不安全。因为Hashtable中每个方法中都加入了Synchronize来保证线程的安全，而hashmap的线程不安全原因是当多个线程同时检测到总数量超过门限值的时候就会同时调用resize操作，各自生成新的数组并rehash后赋给该map底层的数组table，结果最终只有最后一个线程生成的新数组被赋给table变量，其他线程的均会丢失。而且当某些线程已经完成赋值而其他线程刚开始的时候，就会用已经被赋值的table作为原始数组，这样就会有问题。
+3. 是否提供contains方法。
+   
+   HashMap把Hashtable的contains方法去掉了，改成containsValue和containsKey，因为contains方法容易让人引起误解可能是key也可能是value。Hashtable则保留了contains，containsValue和containsKey三个方法，其中contains和containsValue功能相同。
+4. key和value是否允许null值。
+
+    在hashtable中key和values是都不允许为null的，编辑的时候回通过，但是在运行的时候如果有null的值则会报空指针异常。
+
+    在hashmap中可以是用null来作键，可以有多个值为null，因为hashmap中使用containskey（）方法判断是否存在，而不是用get（）。
+5. 两个遍历方式的内部实现上不同。
+
+    两者都是使用Iterator进行遍历，但是由于历史原因Hashtable使用的是Enumeration的方式 。
+
+6. hash值的不同。
+
+    哈希值的使用不同，HashTable直接使用对象的hashCode。而HashMap重新计算hash值。
+7. 内部实现使用的数组初始化和扩容方式不同。
+
+    HashTable在不指定容量的情况下的默认容量为11，而HashMap为16，Hashtable不要求底层数组的容量一定要为2的整数次幂，而HashMap则要求一定为2的整数次幂。
+    
+    Hashtable扩容时，将容量变为原来的2倍加1，而HashMap扩容时，将容量变为原来的2倍。Hashtable和HashMap它们两个内部实现方式的数组的初始大小和扩容的方式。HashTable中hash数组默认大小是11，增加的方式是 old*2+1。
 ### HashSet 和 HashMap 区别
+
+HashSet不是键值对结构。那你叫什么hash啊。。。
+
 ### HashMap详解
 
 1. 众所周知，HashMap是一个用于存储Key-Value键值对的集合，每一个键值对也叫做Entry。这些个键值对（Entry）分散存储在    个数组当中，这个数组就是HashMap的主干。
@@ -268,6 +308,14 @@ List 用来存储有序序列，Set用来存储无序集合，List中存放的�
     (2)因为获取对象的时候要用到equals()和hashCode()方法，那么键对象正确的重写这两个方法是非常重要的,这些类已经很规范的覆写了hashCode()以及equals()方法。
 
 ### HashMap 和 ConcurrentHashMap 的区别
+
+首先，HashMap线程不安全，ConcurrentHashMap则是线程安全，在ConcurrentHashMap中引入了一个"分段锁"的概念，可以理解为把一个大的Map拆分成N个小的HashTable，根据key.hashCode()来决定把key放到哪个HashTable中。
+
+在ConcurrentHashMap中，就是把Map分成了N个Segment，put和get的时候，都是现根据key.hashCode()算出放到哪个Segment中，在ConcurrentHashMap中默认是把segments初始化为长度为16的数组。通常来说，ConcurrentHashMap在保证线程安全的前提下，效率是HashTable的16倍。
+
+详见：https://www.cnblogs.com/ruiati/p/6244833.html
+
+
 ### HashMap 的工作原理及代码实现
 ### ConcurrentHashMap 的工作原理及代码实现
 ## 线程
