@@ -25,6 +25,7 @@
         - [List 和 Map 区别](#list-和-map-区别)
         - [Arraylist 与 LinkedList 区别](#arraylist-与-linkedlist-区别)
         - [ArrayList 与 Vector 区别](#arraylist-与-vector-区别)
+        - [HashMap详解](#HashMap详解)
         - [HashMap 和 Hashtable 的区别](#hashmap-和-hashtable-的区别)
         - [HashSet 和 HashMap 区别](#hashset-和-hashmap-区别)
         - [HashMap 和 ConcurrentHashMap 的区别](#hashmap-和-concurrenthashmap-的区别)
@@ -189,6 +190,7 @@ List 用来存储有序序列，Set用来存储无序集合，List中存放的�
 ### ArrayList 与 Vector 区别
 ### HashMap 和 Hashtable 的区别
 ### HashSet 和 HashMap 区别
+### HashMap详解
 ### HashMap 和 ConcurrentHashMap 的区别
 ### HashMap 的工作原理及代码实现
 ### ConcurrentHashMap 的工作原理及代码实现
