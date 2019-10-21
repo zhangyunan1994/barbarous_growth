@@ -194,45 +194,45 @@ List 用来存储有序序列，Set用来存储无序集合，List中存放的�
 
 1.众所周知，HashMap是一个用于存储Key-Value键值对的集合，每一个键值对也叫做Entry。这些个键值对（Entry）分散存储在一个数组当中，这个数组就是HashMap的主干。</br>
 2.HashMap数组每一个元素的初始值都是Null，对于HashMap我们常用的操作为get and put. </br>
-&nbsp1.put的过程。 在写入一个元素的时候需要先利用哈希函数来确定该元素的写入位置，即该元素的index，但是如果有大量的数据写入，那必然不可避免的产生相同的index，此时HashMap的处理方案是使用链表来解决，即可以简单的认为hashmap是由链表组成的数组，其中使用数组来确定桶的位置，然后使用链表用来处理index重复的元素，但是在java8中进行了改变，在HashMap中链表的长度超过8情况下会将链表转换为红黑树，但是红黑树退化为链表的长度阈值为6，中间有个7作为缓冲，以防止过于频繁的转换浪费资源，这一点后续再说，因为我不懂红黑树。回到刚才，如果哈希函数计算出了相同的index，则将元素放入该位置的链表头，因为设计者认为后写入的元素被调用的概率更大。</br> 
-&nbsp2.get的过程。 在执行get的过程中，会首先将输入端key进行一次映射运算，得到其对应的index来找到该链表，然后从链表头开始，依次对比来找到key所对应的元素，这就是get的执行过程。 另外，HashMap的默认的长度为16，并且每次进行扩增或者初始化时，长度必须是2的幂次方，选择默认长度为16是为了服务于从key映射到index的哈希算法（index=Hash("key")）,为了实现一个均匀分布的Hash函数，设计者们采用了位运算的方式，index=HashCode(Key)&(Length-1)，length为hashmap的长度，举例如下：</br></br> 
-&nbsp&nbsp1.计算book的hashcode，结果为十进制的3029737，二进制的101110001110101110 1001。 </br>
-&nbsp&nbsp2.假定HashMap长度是默认的16，计算Length-1的结果为十进制的15，二进制的1111。</br>
-&nbsp&nbsp3.把以上两个结果做与运算，101110001110101110 1001 & 1111 = 1001，十进制是9，所以 index=9。</br>
-&nbsp可以说，Hash算法最终得到的index结果，完全取决于Key的Hashcode值的最后几位。 这也是为何hashMap的初始长度默认16的原因，如果将HashMap的长度调整为10，则会出现某些index不会出现，而某些index会重复出现的情况。 </br>
-&nbsp解决hash冲突的办法还有4中，分别是：(1)开放定址法(2)链地址法(3)再哈希法(4)公共溢出区域法。 </br>
-&nbsp其中底层使用基本数组来确定桶的位置是因为速度要比链表快，至于为何不使用ArrayList，因为使用基本数组可以自定义扩容机制，HashMap中数组扩容刚好是2的次幂，在进行位运算时的效率高。 而ArrayList的扩容机制是1.5倍扩容，在此并不适用。还有其他的一些相关问题：</br> 
-&nbsp1.HashMap会在什么情况下进行扩容？ 如果bucket满了(超过load factor * current capacity)，就要resize。 load factor为0.75，为了最大程度避免哈希冲突 current capacity为当前数组大小。</br> 
-&nbsp2.为什么扩容是2的幂次方？ </br>
-&nbspHashMap为了存取高效，尽量减小数据间的碰撞，将数据能够较为平均的分布，使得每个链表的长度基本相等，hashmap中函数采用的是位运算进行计算桶的位置（hash&(length-1)。 也就是说hash%length==hash&(length-1)），效果等同于取模，但是如果扩容的长度为整10的倍数，则可能会产生某些index永远不会产生，而有些index则会长度过长的问题。 </br>
-&nbsp3.说说String中hashcode的实现? </br>
-&nbsp顺道提一下hash算法，是将一个大范围的数映射到一个较小的范围，依次来节省资源和空间。String的hashcode算法如下： </br>
-&nbsp&nbsppublic int hashCode() { </br>
-&nbsp&nbsp&nbspint h = hash; </br>
-&nbsp&nbsp&nbspif (h == 0 && value.length > 0) { </br>
-&nbsp&nbsp&nbsp&nbspchar val[] = value; </br>
-&nbsp&nbsp&nbsp&nbspfor (int i = 0; i < value.length; i++) { </br>
-&nbsp&nbsp&nbsp&nbsp&nbsph = 31 X h + val[i]; </br>
-&nbsp&nbsp&nbsp&nbsp} hash = h; </br>
-&nbsp&nbsp&nbsp} return h; </br>
-&nbsp&nbsp}</br>
-&nbspString类中的hashCode计算方法还是比较简单的，就是以31为权，每一位为字符的ASCII值进行运算，用自然溢出来等效取模。</br>
-&nbsp那为什么以31为质数呢？</br>
-&nbsp主要是因为31是一个奇质数，所以31i=32i-i=(i<<5)-i，这种位移与减法结合的计算相比一般的运算快很多（不懂）。</br> 
-&nbsp4.为什么hashmap在链表的长度超过8时会将链表转化为红黑树？ </br>
-&nbsp关于这个问题，首先要知道在jdk 1.8中对HashMap做了哪些优化。 </br>
-&nbsp&nbsp1.将原先的HashMap由数组+链表转化成为了数组+链表+红黑树，详情见上述。</br> 
-&nbsp&nbsp2.优化了高位运算的hash算法：h^(h>>>16)。 </br>
-&nbsp&nbsp3.扩容后，元素要么是在原位置，要么是在原位置再移动2次幂的位置，且链表顺序不变，且以此解决了HashMap的死循环问题。 </br>
-&nbsp至于为什么设置为链表的长度超过8时会转化为红黑树，答案就是不知道。 </br>
-&nbsp5.HashMap在高并发编程的情况下可能会有哪些问题。 </br>
-&nbsp&nbsp(1)多线程扩容，引起的死循环问题。 </br>
-&nbsp&nbsp(2)多线程put的时候可能导致元素丢失。 </br>
-&nbsp&nbsp(3)put非null元素后get出来的却是null。 </br>
-&nbsp其中问题（1）已经在jdk 1.8以后的版本中解决，不会出现死循环的问题。另外的两个问题可以使用ConcurrentHashmap，Hashtable等线程安全等集合类进行解决。 </br>
-&nbsp6.一般来说，用什么作为HashMap的key？ </br>
-&nbsp首先，HashMap的key可以为null，在key为null的时候，会放在数组的第一个位置，一般用Integer、String这种不可变类当HashMap当key，而且String最为常用，有两个原因： </br>
-&nbsp&nbsp(1)因为字符串是不可变的，所以在它创建的时候hashcode就被缓存了，不需要重新计算。这就使得字符串很适合作为Map中的键，字符串的处理速度要快过其它的键对象。这就是HashMap中的键往往都使用字符串。 </br>
+1.put的过程。 在写入一个元素的时候需要先利用哈希函数来确定该元素的写入位置，即该元素的index，但是如果有大量的数据写入，那必然不可避免的产生相同的index，此时HashMap的处理方案是使用链表来解决，即可以简单的认为hashmap是由链表组成的数组，其中使用数组来确定桶的位置，然后使用链表用来处理index重复的元素，但是在java8中进行了改变，在HashMap中链表的长度超过8情况下会将链表转换为红黑树，但是红黑树退化为链表的长度阈值为6，中间有个7作为缓冲，以防止过于频繁的转换浪费资源，这一点后续再说，因为我不懂红黑树。回到刚才，如果哈希函数计算出了相同的index，则将元素放入该位置的链表头，因为设计者认为后写入的元素被调用的概率更大。</br> 
+2.get的过程。 在执行get的过程中，会首先将输入端key进行一次映射运算，得到其对应的index来找到该链表，然后从链表头开始，依次对比来找到key所对应的元素，这就是get的执行过程。 另外，HashMap的默认的长度为16，并且每次进行扩增或者初始化时，长度必须是2的幂次方，选择默认长度为16是为了服务于从key映射到index的哈希算法（index=Hash("key")）,为了实现一个均匀分布的Hash函数，设计者们采用了位运算的方式，index=HashCode(Key)&(Length-1)，length为hashmap的长度，举例如下：</br></br> 
+1.计算book的hashcode，结果为十进制的3029737，二进制的101110001110101110 1001。 </br>
+2.假定HashMap长度是默认的16，计算Length-1的结果为十进制的15，二进制的1111。</br>
+3.把以上两个结果做与运算，101110001110101110 1001 & 1111 = 1001，十进制是9，所以 index=9。</br>
+可以说，Hash算法最终得到的index结果，完全取决于Key的Hashcode值的最后几位。 这也是为何hashMap的初始长度默认16的原因，如果将HashMap的长度调整为10，则会出现某些index不会出现，而某些index会重复出现的情况。 </br>
+解决hash冲突的办法还有4中，分别是：(1)开放定址法(2)链地址法(3)再哈希法(4)公共溢出区域法。 </br>
+其中底层使用基本数组来确定桶的位置是因为速度要比链表快，至于为何不使用ArrayList，因为使用基本数组可以自定义扩容机制，HashMap中数组扩容刚好是2的次幂，在进行位运算时的效率高。 而ArrayList的扩容机制是1.5倍扩容，在此并不适用。还有其他的一些相关问题：</br> 
+1.HashMap会在什么情况下进行扩容？ 如果bucket满了(超过load factor * current capacity)，就要resize。 load factor为0.75，为了最大程度避免哈希冲突 current capacity为当前数组大小。</br> 
+2.为什么扩容是2的幂次方？ </br>
+HashMap为了存取高效，尽量减小数据间的碰撞，将数据能够较为平均的分布，使得每个链表的长度基本相等，hashmap中函数采用的是位运算进行计算桶的位置（hash&(length-1)。 也就是说hash%length==hash&(length-1)），效果等同于取模，但是如果扩容的长度为整10的倍数，则可能会产生某些index永远不会产生，而有些index则会长度过长的问题。 </br>
+3.说说String中hashcode的实现? </br>
+顺道提一下hash算法，是将一个大范围的数映射到一个较小的范围，依次来节省资源和空间。String的hashcode算法如下： </br>
+public int hashCode() { </br>
+int h = hash; </br>
+if (h == 0 && value.length > 0) { </br>
+char val[] = value; </br>
+for (int i = 0; i < value.length; i++) { </br>
+h = 31 X h + val[i]; </br>
+} hash = h; </br>
+} return h; </br>
+}</br>
+String类中的hashCode计算方法还是比较简单的，就是以31为权，每一位为字符的ASCII值进行运算，用自然溢出来等效取模。</br>
+那为什么以31为质数呢？</br>
+主要是因为31是一个奇质数，所以31i=32i-i=(i<<5)-i，这种位移与减法结合的计算相比一般的运算快很多（不懂）。</br> 
+4.为什么hashmap在链表的长度超过8时会将链表转化为红黑树？ </br>
+关于这个问题，首先要知道在jdk 1.8中对HashMap做了哪些优化。 </br>
+1.将原先的HashMap由数组+链表转化成为了数组+链表+红黑树，详情见上述。</br> 
+2.优化了高位运算的hash算法：h^(h>>>16)。 </br>
+3.扩容后，元素要么是在原位置，要么是在原位置再移动2次幂的位置，且链表顺序不变，且以此解决了HashMap的死循环问题。 </br>
+至于为什么设置为链表的长度超过8时会转化为红黑树，答案就是不知道。 </br>
+5.HashMap在高并发编程的情况下可能会有哪些问题。 </br>
+(1)多线程扩容，引起的死循环问题。 </br>
+(2)多线程put的时候可能导致元素丢失。 </br>
+(3)put非null元素后get出来的却是null。 </br>
+其中问题（1）已经在jdk 1.8以后的版本中解决，不会出现死循环的问题。另外的两个问题可以使用ConcurrentHashmap，Hashtable等线程安全等集合类进行解决。 </br>
+6.一般来说，用什么作为HashMap的key？ </br>
+首先，HashMap的key可以为null，在key为null的时候，会放在数组的第一个位置，一般用Integer、String这种不可变类当HashMap当key，而且String最为常用，有两个原因： </br>
+(1)因为字符串是不可变的，所以在它创建的时候hashcode就被缓存了，不需要重新计算。这就使得字符串很适合作为Map中的键，字符串的处理速度要快过其它的键对象。这就是HashMap中的键往往都使用字符串。 </br>
 &nbsp&nbsp(2)因为获取对象的时候要用到equals()和hashCode()方法，那么键对象正确的重写这两个方法是非常重要的,这些类已经很规范的覆写了hashCode()以及equals()方法。</br>
 
 ### HashMap 和 ConcurrentHashMap 的区别
