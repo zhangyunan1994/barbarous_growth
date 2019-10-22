@@ -17,9 +17,9 @@
 
 # 原理
 
-在使用的ORM框架中，我可以想操作对象一样操作数据的存储，这是怎么实现的，我们知道数据库是认识 SQL 语句的，但并不认识`java bean` 呀！同时我们在使用ORM时，需要根据ORM框架的规定定义我们的bean，这是为什么？
+在使用的ORM框架中，我可以想操作对象一样操作数据的存储，这是怎么实现的，我们知道数据库是认识 SQL 语句的，但并不认识`java bean` 呀！同时我们在使用ORM时，需要根据ORM框架的规定定义我们的bean，这是为什么？
 
-这是因为 `ORM` 为我们提供了将对象操作转化为对应的`SQL`语句，例如 `save(bean)`, 这时就需要转化成一个 `insert` 语句，`update(bean)` 这时就需要转成成对应的 update 语句
+这是因为 `ORM` 为我们提供了将对象操作转化为对应的 `SQL`语句，例如 `save(bean)`, 这时就需要转化成一个 `insert` 语句，`update(bean)` 这时就需要转成成对应的 update 语句
 
 通常 insert 语句格式为 
 ```sql
@@ -490,9 +490,9 @@ public class AnnotationParser {
 
 ## 6. 结合反射实现查询操作
 
-> 保存一个entity
+> 保存一个entity
 
-保存操作相对简单，这里主要是将 entity 转换为 insert 语句
+保存操作相对简单，这里主要是将 entity 转换为 insert 语句
 
 ```java
 /**

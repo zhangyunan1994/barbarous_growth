@@ -71,8 +71,9 @@ Mybatis动态sql可以让我们在Xml映射文件内，以标签的形式编写�
 
 举例：下面join查询出来6条记录，一、二列是Teacher对象列，第三列为Student对象列，Mybatis去重复处理后，结果为1个老师6个学生，而不是6个老师6个学生。
 
-       t_id    t_name           s_id
 
+|       t_id |   t_name     |    s_id |
+|:---        |:---          |:---     |
 |          1 | teacher      |      38 |
 |          1 | teacher      |      39 |
 |          1 | teacher      |      40 |
@@ -80,8 +81,7 @@ Mybatis动态sql可以让我们在Xml映射文件内，以标签的形式编写�
 |          1 | teacher      |      42 |
 |          1 | teacher      |      43 |
 
-10、Mybatis是否支持延迟加载？如果支持，它的实现原理是什么？
-注：我出的。
+# 9. Mybatis是否支持延迟加载？如果支持，它的实现原理是什么？
 
 答：Mybatis仅支持association关联对象和collection关联集合对象的延迟加载，association指的就是一对一，collection指的就是一对多查询。在Mybatis配置文件中，可以配置是否启用延迟加载lazyLoadingEnabled=true|false。
 
@@ -89,18 +89,12 @@ Mybatis动态sql可以让我们在Xml映射文件内，以标签的形式编写�
 
 当然了，不光是Mybatis，几乎所有的包括Hibernate，支持延迟加载的原理都是一样的。
 
-11、Mybatis的Xml映射文件中，不同的Xml映射文件，id是否可以重复？
-注：我出的。
 
-答：不同的Xml映射文件，如果配置了namespace，那么id可以重复；如果没有配置namespace，那么id不能重复；毕竟namespace不是必须的，只是最佳实践而已。
-
-原因就是namespace+id是作为Map<String, MappedStatement>的key使用的，如果没有namespace，就剩下id，那么，id重复会导致数据互相覆盖。有了namespace，自然id就可以重复，namespace不同，namespace+id自然也就不同。
-
-# 12. Mybatis中如何执行批处理？
+# 10. Mybatis中如何执行批处理？
 
 使用BatchExecutor完成批处理。
 
-# 13. Mybatis都有哪些Executor执行器？它们之间的区别是什么？
+# 11. Mybatis都有哪些Executor执行器？它们之间的区别是什么？
 
 Mybatis有三种基本的Executor执行器，SimpleExecutor、ReuseExecutor、BatchExecutor。
 
@@ -112,25 +106,10 @@ BatchExecutor：执行update（没有select，JDBC批处理不支持select），
 
 作用范围：Executor的这些特点，都严格限制在SqlSession生命周期范围内。
 
-
-
-
-
-# 16、Mybatis映射文件中，如果A标签通过include引用了B标签的内容，请问，B标签能否定义在A标签的后面，还是说必须定义在A标签的前面？
-注：我出的
-
-答：虽然Mybatis解析Xml映射文件是按照顺序解析的，但是，被引用的B标签依然可以定义在任何地方，Mybatis都可以正确识别。
-
-原理是，Mybatis解析A标签，发现A标签引用了B标签，但是B标签尚未解析到，尚不存在，此时，Mybatis会将A标签标记为未解析状态，然后继续解析余下的标签，包含B标签，待所有标签解析完毕，Mybatis会重新解析那些被标记为未解析的标签，此时再解析A标签时，B标签已经存在，A标签也就可以正常解析完成了。
-
-# 17. 简述Mybatis的Xml映射文件和Mybatis内部数据结构之间的映射关系？
+# 12. 简述Mybatis的Xml映射文件和Mybatis内部数据结构之间的映射关系？
 
 Mybatis将所有Xml配置信息都封装到All-In-One重量级对象Configuration内部。在Xml映射文件中，`<parameterMap>`标签会被解析为ParameterMap对象，其每个子元素会被解析为ParameterMapping对象。`<resultMap>`标签会被解析为ResultMap对象，其每个子元素会被解析为ResultMapping对象。每一个`<select>`、`<insert>`、`<update>`、`<delete>`标签均会被解析为MappedStatement对象，标签内的sql会被解析为BoundSql对象。
 
-# 18. 为什么说Mybatis是半自动ORM映射工具？它与全自动的区别在哪里？
+# 13. 为什么说Mybatis是半自动ORM映射工具？它与全自动的区别在哪里？
 
 Hibernate属于全自动ORM映射工具，使用Hibernate查询关联对象或者关联集合对象时，可以根据对象关系模型直接获取，所以它是全自动的。而Mybatis在查询关联对象或关联集合对象时，需要手动编写sql来完成，所以，称之为半自动ORM映射工具。
-
-
-来源：
-https://www.cnblogs.com/huajiezh/p/6415388.html
