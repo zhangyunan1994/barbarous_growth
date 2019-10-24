@@ -45,7 +45,7 @@
     - [讲讲线程池的实现原理](#%e8%ae%b2%e8%ae%b2%e7%ba%bf%e7%a8%8b%e6%b1%a0%e7%9a%84%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86)
     - [线程池的几种方式](#%e7%ba%bf%e7%a8%8b%e6%b1%a0%e7%9a%84%e5%87%a0%e7%a7%8d%e6%96%b9%e5%bc%8f)
     - [线程的生命周期](#%e7%ba%bf%e7%a8%8b%e7%9a%84%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f)
-  - [锁机制](#%e9%94%81%e6%9c%ba%e5%88%b6)
+    - [锁机制](#%e9%94%81%e6%9c%ba%e5%88%b6)
     - [说说线程安全问题](#%e8%af%b4%e8%af%b4%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8%e9%97%ae%e9%a2%98)
     - [volatile 实现原理](#volatile-%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86)
     - [synchronize 实现原理](#synchronize-%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86)
@@ -387,7 +387,7 @@ Map：存储双列数据的集合，通过键值对存储数据，存储 的数�
 
 2. HashMap数组每一个元素的初始值都是Null，对于HashMap我们常用的操作为get and put.
       1. put的过程。 
-         在写入一个元素的时候需要先利用哈希函数来确定该元素的写入位置，即该元素的index，但是如果有大量的数据写入，那必然不可避免的产生相同的index，此时HashMap的处理方案是使用链表来解决，即可以简单的认为hashmap是由链表组成的数组，其中使用数组来确定桶的位置，然后使用链表用来处理index重复的元素，但是在java8中进行了改变，在HashMap中链表的长度超过8情况下会将链表转换为红黑树，但是红黑树退化为链表的长度阈值为6，中间有个7作为缓冲，以防止过于频繁的转换浪费资源，这一点后续再说，因为我不懂红黑树。回到刚才，如果哈希函数计算出了相同的index，则将元素放入该位置的链表头，因为设计者认为后写入的元素被调用的概率更大。
+         在写入一个元素的时候需要先利用哈希函数来确定该元素的写入位置，即该元素的index，但是如果有大量的数据写入，那必然不可避免的产生相同的index，此时HashMap的处理方案是使用链表来解决，即可以简单的认为hashmap是由链表组成的数组，其中使用数组来确定桶的位置，然后使用链表用来处理index重复的元素，但是在java8中进行了改变，在HashMap中链表的长度超过8且总元素量超过64情况下会将链表转换为红黑树，但是红黑树退化为链表的长度阈值为6，中间有个7作为缓冲，以防止过于频繁的转换浪费资源，这一点后续再说，因为我不懂红黑树。回到刚才，如果哈希函数计算出了相同的index，则将元素放入该位置的链表中（JDK 1.7 之前使用头插法、JDK 1.8 使用尾插法）。
       2. get的过程。 
          在执行get的过程中，会首先将输入端key进行一次映射运算，得到其对应的index来找到该链表，然后从链表 头开始，依次对比来找到key所对应的元素，这就是get的执行过程。 另外，HashMap的默认的长度为16，并且每次进行扩增或者初始化时，长度必须是2的幂次方，选择默认长度为16是为了服务于从key映射到index的哈希算法（index=Hash("key")）,为了实现一个均匀分布的Hash函数，设计者们采用了位运算的方式，index=HashCode(Key)&(Length-1)，length为hashmap的长度，举例如下：
 
@@ -474,6 +474,23 @@ Map：存储双列数据的集合，通过键值对存储数据，存储 的数�
 在放弃了采用分段锁后，使用了一套新的线程安全方案，首先通过Hash找到对应的链表后，查看是否是第一个Object，如果是，直接用cas原则插入，无需加锁，然后如果不是链表第一个object，则直接用链表第一个object加锁，这里加的锁是synchronized，虽然效率不如 ReentrantLock， 但节约了空间，这里会一直用第一个object为锁， 直到重新计算map大小， 比如扩容或者操作了第一个object为止。
 
 ### HashMap 的工作原理及代码实现
+
+HashMap 底层是 hash 数组和单向链表实现，数组中的每个元素都是链表，由 Node 内部类（实现 Map.Entry<K,V>接口）实现，HashMap 通过 put & get 方法存储和获取。存储对象时，将 K/V 键值传给 put() 方法：
+
+①、调用 hash(K) 方法计算 K 的 hash 值，然后结合数组长度，计算得数组下标；
+
+②、调整数组大小（当容器中的元素个数大于 capacity * loadfactor 时，容器会进行扩容resize 为 2n）；
+
+③、i.如果 K 的 hash 值在 HashMap 中不存在，则执行插入，若存在，则发生碰撞；
+
+ii.如果 K 的 hash 值在 HashMap 中存在，且它们两者 equals 返回 true，则更新键值对；
+
+iii. 如果 K 的 hash 值在 HashMap 中存在，且它们两者 equals 返回 false，则插入链表的尾部（尾插法）或者红黑树中（树的添加方式）。（注意：当碰撞导致链表大于 TREEIFY_THRESHOLD = 8 时，就把链表转换成红黑树）获取对象时，将 K 传给 get() 方法：
+
+①、调用 hash(K) 方法（计算 K 的 hash 值）从而获取该键值所在链表的数组下标；
+
+②、顺序遍历链表，equals()方法查找相同 Node 链表中 K 值对应的 V 值。hashCode 是定位的，存储位置；equals是定性的，比较两者是否相等。
+
 ### ConcurrentHashMap 的工作原理及代码实现
 ## 线程
 ### 创建线程的方式及实现
@@ -488,7 +505,7 @@ Map：存储双列数据的集合，通过键值对存储数据，存储 的数�
 
    3)启动线程，即调用线程的start()方法。
 
-1. 实现runnable接口创建线程。
+2. 实现runnable接口创建线程。
 
    1.定义Runnable接口的实现类，一样要重写run()方法，这个run（）方法和Thread中的run()方法一样是线程的执行体。
 
@@ -496,7 +513,7 @@ Map：存储双列数据的集合，通过键值对存储数据，存储 的数�
 
    3.依然是通过调用线程对象的start()方法来启动线程。
 
-1. 使用callable和Future创建线程。
+3. 使用callable和Future创建线程。
 
    1.创建Callable接口的实现类，并实现call()方法，然后创建该实现类的实例（从java8开始可以直接使用Lambda表达式创建Callable对象）。
 
@@ -582,20 +599,66 @@ join() 方法会使当前线程等待调用 join() 方法的线程结束后才�
 
 ### 说说 CountDownLatch 原理
 
+countDownLatch是在jkd1.5中被引入的，作用为是一个线程在等待其他所有线程都运行完之后才开始运行，具体的操作为countDownLatch作为一个计数器，每当一个线程运行完毕就计数-1，当计数器的值为0时，表示所有的线程运行完毕，然后在闭锁上等待的线程就可以运行了。源码如下：
+```
+//参数count为计数值，只提供了这一个构造器
+public CountDownLatch(int count){};
+
+其中有三个方法特别重要：
+//调用await()方法的线程会被挂起，会等待直到count为0才开始运行
+public void await() throws InterruptedException{};
+//和await类型，只不过是在等待一段时间后，count不为0的话也会执行
+public boolean await(long timeout,TimeUnit unit)throws InterruptedException{};
+//将count值减少
+public void countDown(){};
+```
+顺便说一下CountDownLatch和CyclicBarrier区别：
+
+1.countDownLatch是一个计数器，线程完成一个记录一个，计数器递减，只能只用一次。
+
+2.CyclicBarrier的计数器更像一个阀门，需要所有线程都到达，然后继续执行，计数器递增，提供reset功能，可以多次使用。
 ### 讲讲类的实例化顺序
 比如父类静态数据，构造函数，字段，子类静态数据，构造函数，字 段，当new的时候，他们的执行顺序。
 
 类加载器实例化时进行的操作步骤（加载–>连接->初始化）。 父类静态变量、 父类静态代码块、 子类静态变量、 子类静态代码块、 父类非静态变量（父类实例成员变量）、 父类构造函数、 子类非静态变量（子类实例成员变量）、 子类构造函数。
 
 ### 说说 CyclicBarrier 原理
+
+先说作用：CyclicBarrier相当于栅栏，可以使一定数量的线程反复地在栅栏位置处汇集。当线程到达栅栏位置时将调用await方法，这个方法将阻塞直到所有线程都到达栅栏位置。如果所有线程都到达栅栏位置，那么栅栏将打开，此时所有的线程都将被释放，而栅栏将被重置以便下次使用。源码如下：
+```
+其内部使用了ReentrantLock和Condition两个类，有两个构造函数：
+//参数表示拦截的线程数，线程使用await()方法表示已到达栅栏，然后阻塞
+public CyclicBarrier(int parties){
+    this(parties,null);
+}
+//查的说是用于线程到达屏障时，优先执行barrierAction，但是不明白。
+public CyclicBarrier(int parties,Runnable barrierAction){
+    if(parties <=0) throw new IllegalArgumentException;
+    this.parties=parties;
+    this.count=parties;
+    this.barrierCommand=barrierAction;
+}
+```
+CyclicBarrier还提供了一些其他有用的方法，比如getNumberWaiting()方法可以获得CyclicBarrier阻塞的线程数量，isBroken()方法用来了解阻塞的线程是否被中断；
+CountDownLatch允许一个或多个线程等待一组事件的产生，而CyclicBarrier用于等待其他线程运行到栅栏位置。
 ### 说说 Semaphore 原理
+
+Semaphore 是 synchronized 的加强版，作用是控制线程的并发数量。就这一点而言，单纯的synchronized 关键字是实现不了的。具体的等下班了再详细看一下，待补充ing
+
 ### 说说 Exchanger 原理
 ### 说说 CountDownLatch 与 CyclicBarrier 区别
+
+1.countDownLatch是一个计数器，线程完成一个记录一个，计数器递减，只能只用一次。
+
+2.CyclicBarrier的计数器更像一个阀门，需要所有线程都到达，然后继续执行，计数器递增，提供reset功能，可以多次使用。而且CyclicBarrier还提供了一些其他有用的方法，比如getNumberWaiting()方法可以获得CyclicBarrier阻塞的线程数量，isBroken()方法用来了解阻塞的线程是否被中断；CountDownLatch允许一个或多个线程等待一组事件的产生，而CyclicBarrier用于等待其他线程运行到栅栏位置。
 ### ThreadLocal 原理分析
+
+
+
 ### 讲讲线程池的实现原理
 ### 线程池的几种方式
 ### 线程的生命周期
-## 锁机制
+### 锁机制
 ### 说说线程安全问题
 ### volatile 实现原理
 ### synchronize 实现原理
