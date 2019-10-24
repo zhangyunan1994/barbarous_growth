@@ -29,12 +29,14 @@
     - [HashSet 和 HashMap 区别](#hashset-%e5%92%8c-hashmap-%e5%8c%ba%e5%88%ab)
     - [HashMap详解](#hashmap%e8%af%a6%e8%a7%a3)
     - [HashMap 和 ConcurrentHashMap 的区别](#hashmap-%e5%92%8c-concurrenthashmap-%e7%9a%84%e5%8c%ba%e5%88%ab)
+    - [ConcurrentHashMap中的分段锁](#concurrenthashmap%e4%b8%ad%e7%9a%84%e5%88%86%e6%ae%b5%e9%94%81)
     - [HashMap 的工作原理及代码实现](#hashmap-%e7%9a%84%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86%e5%8f%8a%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0)
     - [ConcurrentHashMap 的工作原理及代码实现](#concurrenthashmap-%e7%9a%84%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86%e5%8f%8a%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0)
   - [线程](#%e7%ba%bf%e7%a8%8b)
     - [创建线程的方式及实现](#%e5%88%9b%e5%bb%ba%e7%ba%bf%e7%a8%8b%e7%9a%84%e6%96%b9%e5%bc%8f%e5%8f%8a%e5%ae%9e%e7%8e%b0)
     - [sleep() 、join（）、yield（）有什么区别](#sleep-joinyield%e6%9c%89%e4%bb%80%e4%b9%88%e5%8c%ba%e5%88%ab)
     - [说说 CountDownLatch 原理](#%e8%af%b4%e8%af%b4-countdownlatch-%e5%8e%9f%e7%90%86)
+    - [讲讲类的实例化顺序](#%e8%ae%b2%e8%ae%b2%e7%b1%bb%e7%9a%84%e5%ae%9e%e4%be%8b%e5%8c%96%e9%a1%ba%e5%ba%8f)
     - [说说 CyclicBarrier 原理](#%e8%af%b4%e8%af%b4-cyclicbarrier-%e5%8e%9f%e7%90%86)
     - [说说 Semaphore 原理](#%e8%af%b4%e8%af%b4-semaphore-%e5%8e%9f%e7%90%86)
     - [说说 Exchanger 原理](#%e8%af%b4%e8%af%b4-exchanger-%e5%8e%9f%e7%90%86)
@@ -465,6 +467,11 @@ Map：存储双列数据的集合，通过键值对存储数据，存储 的数�
 
 详见：https://www.cnblogs.com/ruiati/p/6244833.html
 
+### ConcurrentHashMap中的分段锁
+
+原因由以下几点： 1、加入多个分段锁浪费内存空间。 2、生产环境中， map 在放入时竞争同一个锁的概率非常小，分段锁反而会造成更新等操作的长时间等待。 3、为了提高 GC 的效率。
+
+在放弃了采用分段锁后，使用了一套新的线程安全方案，首先通过Hash找到对应的链表后，查看是否是第一个Object，如果是，直接用cas原则插入，无需加锁，然后如果不是链表第一个object，则直接用链表第一个object加锁，这里加的锁是synchronized，虽然效率不如 ReentrantLock， 但节约了空间，这里会一直用第一个object为锁， 直到重新计算map大小， 比如扩容或者操作了第一个object为止。
 
 ### HashMap 的工作原理及代码实现
 ### ConcurrentHashMap 的工作原理及代码实现
@@ -574,6 +581,12 @@ join()
 join() 方法会使当前线程等待调用 join() 方法的线程结束后才能继续执行。
 
 ### 说说 CountDownLatch 原理
+
+### 讲讲类的实例化顺序
+比如父类静态数据，构造函数，字段，子类静态数据，构造函数，字 段，当new的时候，他们的执行顺序。
+
+类加载器实例化时进行的操作步骤（加载–>连接->初始化）。 父类静态变量、 父类静态代码块、 子类静态变量、 子类静态代码块、 父类非静态变量（父类实例成员变量）、 父类构造函数、 子类非静态变量（子类实例成员变量）、 子类构造函数。
+
 ### 说说 CyclicBarrier 原理
 ### 说说 Semaphore 原理
 ### 说说 Exchanger 原理
