@@ -5,10 +5,10 @@
 
 <!-- TOC -->
 
-- [java 代理](#java-代理)
-    - [静态代理](#静态代理)
-    - [动态代理](#动态代理)
-        - [JDK中生成代理对象的API](#jdk中生成代理对象的api)
+- [java 代理](#java-%e4%bb%a3%e7%90%86)
+  - [静态代理](#%e9%9d%99%e6%80%81%e4%bb%a3%e7%90%86)
+  - [动态代理](#%e5%8a%a8%e6%80%81%e4%bb%a3%e7%90%86)
+    - [JDK中生成代理对象的API](#jdk%e4%b8%ad%e7%94%9f%e6%88%90%e4%bb%a3%e7%90%86%e5%af%b9%e8%b1%a1%e7%9a%84api)
 
 <!-- /TOC -->
 
@@ -116,10 +116,9 @@ static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces,Invocat
 ```
 注意该方法是在Proxy类中是静态方法,且接收的三个参数依次为:
 
-1. ClassLoader loader,:指定当前目标对象使用类加载器,获取加载器的方法是固定的
-2. Class<?>[] interfaces,:目标对象实现的接口的类型,使用泛型方式确认类型
-3. InvocationHandler 
-4. h:事件处理,执行目标对象的方法时,会触发事件处理器的方法,会把当前执行目标对象的方法作为参数传入
+1. ClassLoader loader:指定当前目标对象使用类加载器,获取加载器的方法是固定的
+2. Class<?>[] interfaces:目标对象实现的接口的类型,使用泛型方式确认类型
+3. InvocationHandler h:事件处理,执行目标对象的方法时,会触发事件处理器的方法,会把当前执行目标对象的方法作为参数传入
 
 代码示例:
 接口类`ILogin.java`以及接口实现类,目标对象`LoginController.java`是一样的,没有做修改.在这个基础上,增加一个代理工厂类(ProxyFactory.java),将代理类写在这个地方,然后在测试类(需要使用到代理的代码)中先建立目标对象和代理对象的联系,然后代用代理对象的中同名方法

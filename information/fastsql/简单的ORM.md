@@ -329,8 +329,8 @@ package com.zyndev.tool.fastsql;
 import javax.persistence.*;
 
 /**
- * @author: 张瑀楠 zyndev@gmail.com
- * date  : 2017/11/30 下午11:21
+ * @author 张瑀楠 zyndev@gmail.com
+ * @date   2017/11/30 下午11:21
  */
 @Data
 @Entity

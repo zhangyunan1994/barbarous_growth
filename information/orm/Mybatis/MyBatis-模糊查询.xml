@@ -1,3 +1,0 @@
-CONCAT('%',#{name})
-
-CONCAT(CONCAT('%',#{name}),'%')

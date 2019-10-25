@@ -1,13 +1,10 @@
-# barbarous growth
-
-野蛮生长
+<h1> barbarous growth </h1>
 
 **Table of Contents**
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
 
-- [barbarous growth](#barbarous-growth)
 - [学习资料](#%e5%ad%a6%e4%b9%a0%e8%b5%84%e6%96%99)
 - [入门](#%e5%85%a5%e9%97%a8)
 - [中级篇](#%e4%b8%ad%e7%ba%a7%e7%af%87)
@@ -41,9 +38,9 @@
 
 # 入门
 
-* 编程语言：[Java](./information/language/java) / Python / C++ / Go / 等等
+* 编程语言：[Java](./information/language/java) / [Python](./information/language/python/) / [Go](./information/language/go/) /
 * Web框架，如Spring MVC、Flask、Django等等
-* ORM框架，如Spring JDBC、Mybatis、Hibernate、JPA、jade、sqlalchemy、django orm
+* ORM框架，如Spring JDBC、[Mybatis](./information/orm/Mybatis/)、Hibernate、JPA、jade、sqlalchemy、django orm
 * HTTP协议基础
     
 # 中级篇
