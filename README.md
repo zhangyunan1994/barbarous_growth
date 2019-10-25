@@ -88,15 +88,17 @@
 # 数据持久化
 
 * SQL
+  * [MySQL](./information/db/mysql/readme.md)
+  * Oracle
 * NoSQL
   * [Redis](./information/nosql/Redis/README.md)
-* ORM
 * 搜索引擎 elasticsearch、solr
 
 # 数据库
 
 * 查询性能优化
 * 结构优化
+* 分库分表
 * 主从复制、主主复制等等
 * 伸缩性与高可用性
 * 备份恢复与容灾
