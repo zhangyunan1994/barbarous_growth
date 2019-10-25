@@ -211,6 +211,12 @@
     - [内部类的作用](#%e5%86%85%e9%83%a8%e7%b1%bb%e7%9a%84%e4%bd%9c%e7%94%a8)
     - [什么是编译器常量?使用它有什么风险?](#%e4%bb%80%e4%b9%88%e6%98%af%e7%bc%96%e8%af%91%e5%99%a8%e5%b8%b8%e9%87%8f%e4%bd%bf%e7%94%a8%e5%ae%83%e6%9c%89%e4%bb%80%e4%b9%88%e9%a3%8e%e9%99%a9)
     - [关于垃圾回收](#%e5%85%b3%e4%ba%8e%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6)
+    - [简单的解释一下垃圾回收](#%e7%ae%80%e5%8d%95%e7%9a%84%e8%a7%a3%e9%87%8a%e4%b8%80%e4%b8%8b%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6)
+    - [进程,线程相关](#%e8%bf%9b%e7%a8%8b%e7%ba%bf%e7%a8%8b%e7%9b%b8%e5%85%b3)
+    - [什么是多线程的上下文切换](#%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%9a%e7%ba%bf%e7%a8%8b%e7%9a%84%e4%b8%8a%e4%b8%8b%e6%96%87%e5%88%87%e6%8d%a2)
+    - [synchronized和ReentrantLock的区别](#synchronized%e5%92%8creentrantlock%e7%9a%84%e5%8c%ba%e5%88%ab)
+    - [FutureTask是什么](#futuretask%e6%98%af%e4%bb%80%e4%b9%88)
+    - [ConcurrentHashMap的并发度是什么?](#concurrenthashmap%e7%9a%84%e5%b9%b6%e5%8f%91%e5%ba%a6%e6%98%af%e4%bb%80%e4%b9%88)
       - [CyclicBarrier和CountDownLatch区别](#cyclicbarrier%e5%92%8ccountdownlatch%e5%8c%ba%e5%88%ab)
     - [关于volatile关键字](#%e5%85%b3%e4%ba%8evolatile%e5%85%b3%e9%94%ae%e5%ad%97)
       - [volatile类型变量提供什么保证?](#volatile%e7%b1%bb%e5%9e%8b%e5%8f%98%e9%87%8f%e6%8f%90%e4%be%9b%e4%bb%80%e4%b9%88%e4%bf%9d%e8%af%81)
@@ -891,13 +897,13 @@ WeakReference与SoftReference的区别?
 如何判断一个对象是否应该被回收
 这就是所谓的对象存活性判断,常用的方法有两种:1.引用计数法;2:对象可达性分析.由于引用计数法存在互相引用导致无法进行GC的问题,所以目前JVM虚拟机多使用对象可达性分析算法.
 
-简单的解释一下垃圾回收
+### 简单的解释一下垃圾回收
 Java 垃圾回收机制最基本的做法是分代回收。内存中的区域被划分成不同的世代，对象根据其存活的时间被保存在对应世代的区域中。一般的实现是划分成3个世代：年轻、年老和永久。内存的分配是发生在年轻世代中的。当一个对象存活时间足够长的时候，它就会被复制到年老世代中。对于不同的世代可以使用不同的垃圾回收算法。进行世代划分的出发点是对应用中对象存活时间进行研究之后得出的统计规律。一般来说，一个应用中的大部分对象的存活时间都很短。比如局部变量的存活时间就只在方法的执行过程中。基于这一点，对于年轻世代的垃圾回收算法就可以很有针对性.
 
 调用System.gc()会发生什么?
 通知GC开始工作,但是GC真正开始的时间不确定.
 
-进程,线程相关
+### 进程,线程相关
 说说进程,线程,协程之间的区别
 简而言之,进程是程序运行和资源分配的基本单位,一个程序至少有一个进程,一个进程至少有一个线程.进程在执行过程中拥有独立的内存单元,而多个线程共享内存资源,减少切换次数,从而效率更高.线程是进程的一个实体,是cpu调度和分派的基本单位,是比程序更小的能独立运行的基本单位.同一进程中的多个线程之间可以并发执行.
 
@@ -969,148 +975,27 @@ sleep(milliseconds)需要指定一个睡眠时间，时间一到会自动唤醒.
 为什么wait,nofity和nofityAll这些方法不放在Thread类当中
 一个很明显的原因是JAVA提供的锁是对象级的而不是线程级的，每个对象都有锁，通过线程获得。如果线程需要等待某些锁那么调用对象中的wait()方法就有意义了。如果wait()方法定义在Thread类中，线程正在等待的是哪个锁就不明显了。简单的说，由于wait，notify和notifyAll都是锁级别的操作，所以把他们定义在Object类中因为锁属于对象。
 
-怎么唤醒一个阻塞的线程
-如果线程是因为调用了wait()、sleep()或者join()方法而导致的阻塞，可以中断线程，并且通过抛出InterruptedException来唤醒它；如果线程遇到了IO阻塞，无能为力，因为IO是操作系统实现的，Java代码并没有办法直接接触到操作系统。
 
-什么是多线程的上下文切换
+### 什么是多线程的上下文切换
 多线程的上下文切换是指CPU控制权由一个已经正在运行的线程切换到另外一个就绪并等待获取CPU执行权的线程的过程。
 
-synchronized和ReentrantLock的区别
+### synchronized和ReentrantLock的区别
+
 synchronized是和if、else、for、while一样的关键字，ReentrantLock是类，这是二者的本质区别。既然ReentrantLock是类，那么它就提供了比synchronized更多更灵活的特性，可以被继承、可以有方法、可以有各种各样的类变量，ReentrantLock比synchronized的扩展性体现在几点上： 
 （1）ReentrantLock可以对获取锁的等待时间进行设置，这样就避免了死锁 
 （2）ReentrantLock可以获取各种锁的信息 
 （3）ReentrantLock可以灵活地实现多路通知 
 另外，二者的锁机制其实也是不一样的:ReentrantLock底层调用的是Unsafe的park方法加锁，synchronized操作的应该是对象头中mark word.
 
-FutureTask是什么
+### FutureTask是什么
+
 这个其实前面有提到过，FutureTask表示一个异步运算的任务。FutureTask里面可以传入一个Callable的具体实现类，可以对这个异步运算的任务的结果进行等待获取、判断是否已经完成、取消任务等操作。当然，由于FutureTask也是Runnable接口的实现类，所以FutureTask也可以放入线程池中。
 
 一个线程如果出现了运行时异常怎么办?
 如果这个异常没有被捕获的话，这个线程就停止执行了。另外重要的一点是：如果这个线程持有某个某个对象的监视器，那么这个对象监视器会被立即释放
 
-Java当中有哪几种锁
-自旋锁: 自旋锁在JDK1.6之后就默认开启了。基于之前的观察，共享数据的锁定状态只会持续很短的时间，为了这一小段时间而去挂起和恢复线程有点浪费，所以这里就做了一个处理，让后面请求锁的那个线程在稍等一会，但是不放弃处理器的执行时间，看看持有锁的线程能否快速释放。为了让线程等待，所以需要让线程执行一个忙循环也就是自旋操作。在jdk6之后，引入了自适应的自旋锁，也就是等待的时间不再固定了，而是由上一次在同一个锁上的自旋时间及锁的拥有者状态来决定
+### ConcurrentHashMap的并发度是什么?
 
-偏向锁: 在JDK1.之后引入的一项锁优化，目的是消除数据在无竞争情况下的同步原语。进一步提升程序的运行性能。 偏向锁就是偏心的偏，意思是这个锁会偏向第一个获得他的线程，如果接下来的执行过程中，改锁没有被其他线程获取，则持有偏向锁的线程将永远不需要再进行同步。偏向锁可以提高带有同步但无竞争的程序性能，也就是说他并不一定总是对程序运行有利，如果程序中大多数的锁都是被多个不同的线程访问，那偏向模式就是多余的，在具体问题具体分析的前提下，可以考虑是否使用偏向锁。
-
-轻量级锁: 为了减少获得锁和释放锁所带来的性能消耗，引入了“偏向锁”和“轻量级锁”，所以在Java SE1.6里锁一共有四种状态，无锁状态，偏向锁状态，轻量级锁状态和重量级锁状态，它会随着竞争情况逐渐升级。锁可以升级但不能降级，意味着偏向锁升级成轻量级锁后不能降级成偏向锁
-
-如何在两个线程间共享数据
-通过在线程之间共享对象就可以了，然后通过wait/notify/notifyAll、await/signal/signalAll进行唤起和等待，比方说阻塞队列BlockingQueue就是为线程之间共享数据而设计的
-
-如何正确的使用wait()?使用if还是while?
-wait() 方法应该在循环调用，因为当线程获取到 CPU 开始执行的时候，其他条件可能还没有满足，所以在处理前，循环检测条件是否满足会更好。下面是一段标准的使用 wait 和 notify 方法的代码：
-
- synchronized (obj) {
-    while (condition does not hold)
-      obj.wait(); // (Releases lock, and reacquires on wakeup)
-      ... // Perform action appropriate to condition
- }
-1
-2
-3
-4
-5
-什么是线程局部变量ThreadLocal
-线程局部变量是局限于线程内部的变量，属于线程自身所有，不在多个线程间共享。Java提供ThreadLocal类来支持线程局部变量，是一种实现线程安全的方式。但是在管理环境下（如 web 服务器）使用线程局部变量的时候要特别小心，在这种情况下，工作线程的生命周期比任何应用变量的生命周期都要长。任何线程局部变量一旦在工作完成后没有释放，Java 应用就存在内存泄露的风险。
-
-ThreadLoal的作用是什么?
-简单说ThreadLocal就是一种以空间换时间的做法在每个Thread里面维护了一个ThreadLocal.ThreadLocalMap把数据进行隔离，数据不共享，自然就没有线程安全方面的问题了.
-
-生产者消费者模型的作用是什么?
-（1）通过平衡生产者的生产能力和消费者的消费能力来提升整个系统的运行效率，这是生产者消费者模型最重要的作用 
-（2）解耦，这是生产者消费者模型附带的作用，解耦意味着生产者和消费者之间的联系少，联系越少越可以独自发展而不需要收到相互的制约
-
-写一个生产者-消费者队列
-可以通过阻塞队列实现,也可以通过wait-notify来实现.
-
-使用阻塞队列来实现
-//消费者
-public class Producer implements Runnable{
-    private final BlockingQueue<Integer> queue;
-
-    public Producer(BlockingQueue q){
-        this.queue=q;
-    }
-
-    @Override
-    public void run() {
-        try {
-            while (true){
-                Thread.sleep(1000);//模拟耗时
-                queue.put(produce());
-            }
-        }catch (InterruptedException e){
-
-        }
-    }
-
-    private int produce() {
-        int n=new Random().nextInt(10000);
-        System.out.println("Thread:" + Thread.currentThread().getId() + " produce:" + n);
-        return n;
-    }
-}
-//消费者
-public class Consumer implements Runnable {
-    private final BlockingQueue<Integer> queue;
-
-    public Consumer(BlockingQueue q){
-        this.queue=q;
-    }
-
-    @Override
-    public void run() {
-        while (true){
-            try {
-                Thread.sleep(2000);//模拟耗时
-                consume(queue.take());
-            }catch (InterruptedException e){
-
-            }
-
-        }
-    }
-
-    private void consume(Integer n) {
-        System.out.println("Thread:" + Thread.currentThread().getId() + " consume:" + n);
-
-    }
-}
-//测试
-public class Main {
-
-    public static void main(String[] args) {
-        BlockingQueue<Integer> queue=new ArrayBlockingQueue<Integer>(100);
-        Producer p=new Producer(queue);
-        Consumer c1=new Consumer(queue);
-        Consumer c2=new Consumer(queue);
-
-        new Thread(p).start();
-        new Thread(c1).start();
-        new Thread(c2).start();
-    }
-}
-
-使用wait-notify来实现
-该种方式应该最经典,这里就不做说明了
-
-如果你提交任务时，线程池队列已满，这时会发生什么
-如果你使用的LinkedBlockingQueue，也就是无界队列的话，没关系，继续添加任务到阻塞队列中等待执行，因为LinkedBlockingQueue可以近乎认为是一个无穷大的队列，可以无限存放任务；如果你使用的是有界队列比方说ArrayBlockingQueue的话，任务首先会被添加到ArrayBlockingQueue中，ArrayBlockingQueue满了，则会使用拒绝策略RejectedExecutionHandler处理满了的任务，默认是AbortPolicy。
-
-为什么要使用线程池
-避免频繁地创建和销毁线程，达到线程对象的重用。另外，使用线程池还可以根据项目灵活地控制并发的数目。
-
-java中用到的线程调度算法是什么
-抢占式。一个线程用完CPU之后，操作系统会根据线程优先级、线程饥饿情况等数据算出一个总的优先级并分配下一个时间片给某个线程执行。
-
-Thread.sleep(0)的作用是什么
-由于Java采用抢占式的线程调度算法，因此可能会出现某条线程常常获取到CPU控制权的情况，为了让某些优先级比较低的线程也能获取到CPU控制权，可以使用Thread.sleep(0)手动触发一次操作系统分配时间片的操作，这也是平衡CPU控制权的一种操作。
-
-
-悲观锁：悲观锁认为竞争总是会发生，因此每次对某资源进行操作时，都会持有一个独占的锁，就像synchronized，不管三七二十一，直接上了锁就操作资源了。
-
-ConcurrentHashMap的并发度是什么?
 ConcurrentHashMap的并发度就是segment的大小，默认为16，这意味着最多同时可以有16条线程操作ConcurrentHashMap，这也是ConcurrentHashMap对Hashtable的最大优势，任何情况下，Hashtable能同时有两条线程获取Hashtable中的数据吗？
 
 ConcurrentHashMap的工作原理
