@@ -89,6 +89,7 @@
 
 * SQL
 * NoSQL
+  * [Redis](./information/nosql/Redis/README.md)
 * ORM
 * 搜索引擎 elasticsearch、solr
 
