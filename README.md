@@ -30,7 +30,7 @@
 
 # 学习资料
 
-[]()
+[来点这里](./information/material.md)
 
 # 入门
 
