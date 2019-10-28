@@ -30,11 +30,7 @@
 
 # 学习资料
 
-
-名称 | 类型 | 简介
----------|----------|---------
- [设计模式](./material/设计模式.xmind) | xmind | 常用设计模式介绍
- extends java | xmind | extends java 相关内容
+[]()
 
 # 入门
 
