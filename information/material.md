@@ -12,6 +12,9 @@ https://github.com/Snailclimb/JavaGuide
 ## 4. 资料整理
 https://github.com/doocs/advanced-java
 
+## 5. awesome
+https://github.com/topics/awesome
+
 # ppt资料
 
 ## 2017杭州云栖大会精华PPT
@@ -22,3 +25,8 @@ https://github.com/Alibaba-Technology/Alibaba-Technology-Book-Series
 
 ## 云栖大会 最完整的资料下载（博客，PPT，视频）
 https://github.com/alibaba-developer/Technical-Meeting
+
+# 博客网站
+
+## segmentfault
+https://segmentfault.com/
