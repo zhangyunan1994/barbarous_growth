@@ -10,6 +10,7 @@
     - [final有哪些用法](#final%e6%9c%89%e5%93%aa%e4%ba%9b%e7%94%a8%e6%b3%95)
     - [int 和 Integer 有什么区别](#int-%e5%92%8c-integer-%e6%9c%89%e4%bb%80%e4%b9%88%e5%8c%ba%e5%88%ab)
     - [重载和重写的区别](#%e9%87%8d%e8%bd%bd%e5%92%8c%e9%87%8d%e5%86%99%e7%9a%84%e5%8c%ba%e5%88%ab)
+    - [throw和throws的区别](#throw%e5%92%8cthrows%e7%9a%84%e5%8c%ba%e5%88%ab)
     - [抽象类和接口有什么区别](#%e6%8a%bd%e8%b1%a1%e7%b1%bb%e5%92%8c%e6%8e%a5%e5%8f%a3%e6%9c%89%e4%bb%80%e4%b9%88%e5%8c%ba%e5%88%ab)
     - [说说反射的用途及实现](#%e8%af%b4%e8%af%b4%e5%8f%8d%e5%b0%84%e7%9a%84%e7%94%a8%e9%80%94%e5%8f%8a%e5%ae%9e%e7%8e%b0)
     - [说说自定义注解的场景及实现](#%e8%af%b4%e8%af%b4%e8%87%aa%e5%ae%9a%e4%b9%89%e6%b3%a8%e8%a7%a3%e7%9a%84%e5%9c%ba%e6%99%af%e5%8f%8a%e5%ae%9e%e7%8e%b0)
@@ -20,8 +21,7 @@
     - [MVC 设计思想](#mvc-%e8%ae%be%e8%ae%a1%e6%80%9d%e6%83%b3)
     - [equals 与 == 的区别](#equals-%e4%b8%8e--%e7%9a%84%e5%8c%ba%e5%88%ab)
   - [集合](#%e9%9b%86%e5%90%88)
-    - [List 和 Set 区别](#list-%e5%92%8c-set-%e5%8c%ba%e5%88%ab)
-    - [List 和 Map 区别](#list-%e5%92%8c-map-%e5%8c%ba%e5%88%ab)
+    - [List、 Set 和 Map 区别](#list-set-%e5%92%8c-map-%e5%8c%ba%e5%88%ab)
     - [ArrayList 与 LinkedList 区别](#arraylist-%e4%b8%8e-linkedlist-%e5%8c%ba%e5%88%ab)
     - [ArrayList 与 Vector 区别](#arraylist-%e4%b8%8e-vector-%e5%8c%ba%e5%88%ab)
     - [HashMap 和 Hashtable 的区别](#hashmap-%e5%92%8c-hashtable-%e7%9a%84%e5%8c%ba%e5%88%ab)
@@ -29,6 +29,12 @@
     - [HashMap详解](#hashmap%e8%af%a6%e8%a7%a3)
     - [HashMap 和 ConcurrentHashMap 的区别](#hashmap-%e5%92%8c-concurrenthashmap-%e7%9a%84%e5%8c%ba%e5%88%ab)
     - [ConcurrentHashMap中的分段锁](#concurrenthashmap%e4%b8%ad%e7%9a%84%e5%88%86%e6%ae%b5%e9%94%81)
+    - [LinkedHashMap和PriorityQueue的区别](#linkedhashmap%e5%92%8cpriorityqueue%e7%9a%84%e5%8c%ba%e5%88%ab)
+    - [WeakHashMap与HashMap的区别是什么?](#weakhashmap%e4%b8%8ehashmap%e7%9a%84%e5%8c%ba%e5%88%ab%e6%98%af%e4%bb%80%e4%b9%88)
+    - [Comparator和Comparable的区别?](#comparator%e5%92%8ccomparable%e7%9a%84%e5%8c%ba%e5%88%ab)
+    - [如何实现集合排序?](#%e5%a6%82%e4%bd%95%e5%ae%9e%e7%8e%b0%e9%9b%86%e5%90%88%e6%8e%92%e5%ba%8f)
+    - [HashMap的实现原理](#hashmap%e7%9a%84%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86)
+    - [ConcurrentHashMap的并发度是什么?](#concurrenthashmap%e7%9a%84%e5%b9%b6%e5%8f%91%e5%ba%a6%e6%98%af%e4%bb%80%e4%b9%88)
     - [HashMap 的工作原理及代码实现](#hashmap-%e7%9a%84%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86%e5%8f%8a%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0)
     - [ConcurrentHashMap 的工作原理及代码实现](#concurrenthashmap-%e7%9a%84%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86%e5%8f%8a%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0)
   - [线程](#%e7%ba%bf%e7%a8%8b)
@@ -215,17 +221,9 @@
     - [什么是多线程的上下文切换](#%e4%bb%80%e4%b9%88%e6%98%af%e5%a4%9a%e7%ba%bf%e7%a8%8b%e7%9a%84%e4%b8%8a%e4%b8%8b%e6%96%87%e5%88%87%e6%8d%a2)
     - [synchronized和ReentrantLock的区别](#synchronized%e5%92%8creentrantlock%e7%9a%84%e5%8c%ba%e5%88%ab)
     - [FutureTask是什么](#futuretask%e6%98%af%e4%bb%80%e4%b9%88)
-    - [ConcurrentHashMap的并发度是什么?](#concurrenthashmap%e7%9a%84%e5%b9%b6%e5%8f%91%e5%ba%a6%e6%98%af%e4%bb%80%e4%b9%88)
       - [CyclicBarrier和CountDownLatch区别](#cyclicbarrier%e5%92%8ccountdownlatch%e5%8c%ba%e5%88%ab)
     - [关于volatile关键字](#%e5%85%b3%e4%ba%8evolatile%e5%85%b3%e9%94%ae%e5%ad%97)
       - [volatile类型变量提供什么保证?](#volatile%e7%b1%bb%e5%9e%8b%e5%8f%98%e9%87%8f%e6%8f%90%e4%be%9b%e4%bb%80%e4%b9%88%e4%bf%9d%e8%af%81)
-      - [LinkedHashMap和PriorityQueue的区别](#linkedhashmap%e5%92%8cpriorityqueue%e7%9a%84%e5%8c%ba%e5%88%ab)
-      - [WeakHashMap与HashMap的区别是什么?](#weakhashmap%e4%b8%8ehashmap%e7%9a%84%e5%8c%ba%e5%88%ab%e6%98%af%e4%bb%80%e4%b9%88)
-    - [#ArrayList和Array有什么区别?](#arraylist%e5%92%8carray%e6%9c%89%e4%bb%80%e4%b9%88%e5%8c%ba%e5%88%ab)
-      - [Comparator和Comparable的区别?](#comparator%e5%92%8ccomparable%e7%9a%84%e5%8c%ba%e5%88%ab)
-      - [如何实现集合排序?](#%e5%a6%82%e4%bd%95%e5%ae%9e%e7%8e%b0%e9%9b%86%e5%90%88%e6%8e%92%e5%ba%8f)
-      - [HashMap的实现原理](#hashmap%e7%9a%84%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86)
-      - [throw和throws的区别](#throw%e5%92%8cthrows%e7%9a%84%e5%8c%ba%e5%88%ab)
   - [JDK 1.8特性](#jdk-18%e7%89%b9%e6%80%a7)
 
 # 基础篇
@@ -242,18 +240,18 @@
 
 ### final有哪些用法
 
-final也是很多面试喜欢问的地方,能回答下以下三点就不错了: 
+final 也是很多面试喜欢问的地方,能回答下以下三点就不错了: 
 
-1. 被final修饰的类不可以被继承 
-2. 被final修饰的方法不可以被重写 
-3. 被final修饰的变量不可以被改变.如果修饰引用,那么表示引用不可变,引用指向的内容可变. 
-4. 被final修饰的方法,JVM会尝试将其内联,以提高运行效率 
-5. 被final修饰的常量,在编译阶段会存入常量池中.
+1. 被 final 修饰的类不可以被继承 
+2. 被 final 修饰的方法不可以被重写 
+3. 被 final 修饰的变量不可以被改变.如果修饰引用,那么表示引用不可变,引用指向的内容可变. 
+4. 被 final 修饰的方法,JVM会尝试将其内联,以提高运行效率 
+5. 被 final 修饰的常量,在编译阶段会存入常量池中.
 
 回答出编译器对final域要遵守的两个重排序规则更好: 
 
-1. 在构造函数内对一个final域的写入,与随后把这个被构造对象的引用赋值给一个引用变量,这两个操作之间不能重排序. 
-2. 初次读一个包含final域的对象的引用,与随后初次读这个final域,这两个操作之间不能重排序.
+1. 在构造函数内对一个 final 域的写入,与随后把这个被构造对象的引用赋值给一个引用变量,这两个操作之间不能重排序. 
+2. 初次读一个包含 final 域的对象的引用,与随后初次读这个 final 域,这两个操作之间不能重排序.
 
 ### int 和 Integer 有什么区别
 
@@ -280,6 +278,12 @@ Java 为每一个基本数据类型都引入了对应的包装类型（wrapper c
 3. 访问权限不能比父类中被重写的方法的访问权限更低。
 4. 重写的方法能够抛出任何非强制异常（UncheckedException，也叫非运行时异常），无论被重写的方法是 否抛出异常。但是，重写的方法不能抛出新的强制性异常，或者比被重写方法声明的更广泛的强制性异常，反之则 可以。
 
+### throw和throws的区别
+
+throw用于主动抛出java.lang.Throwable 类的一个实例化对象，意思是说你可以通过关键字 throw 抛出一个 Error 或者 一个Exception，如：throw new IllegalArgumentException(“size must be multiple of 2″), 
+
+而throws 的作用是作为方法声明和签名的一部分，方法被抛出相应的异常以便调用者能处理。Java 中，任何未处理的受检查异常强制在 throws 子句中声明。
+
 ### 抽象类和接口有什么区别
 
 **抽象类**
@@ -288,11 +292,12 @@ Java 为每一个基本数据类型都引入了对应的包装类型（wrapper c
 
 **接口**
 
-接口是抽象方法的集合。如果一个类实现了某个接口，那么它就继承了这个接口的抽象方法。
+接口是抽象方法的集合。如果一个类实现了某个接口，那么它就继承了这个接口的抽象方法。Java8 之后接口中方法可以有默认实现
 
 ### 说说反射的用途及实现
 
-首先要清楚，什么是Java中的反射，反射是Java语言的特征之一，运行运行中的Java程序获取自身的信息，并且可以操作类和对象的内部属性。通过反射，我们可以在运行时获取程序或程序集中的每一个类型成员和成员变量的信息，程序中一般的对象类型都是在编译期确定下来的，而Java的反射机制可以动态的创建对象并调用其属性，这样对象的类型在编译期是未知的。所以我们通过反射机制直接创建对象即使这个对象是在编译期是未知的。反射的核心为:在JVM运行时才动态调用类或调用方法或属性，不需要事先知道运行对象是谁。Java的反射提供的功能如下：
+首先要清楚，什么是Java中的反射，反射是Java语言的特征之一，运行中的Java程序获取自身的信息，并且可以操作类和对象的内部属性。通过反射，我们可以在运行时获取程序或程序集中的每一个类型成员和成员变量的信息，程序中一般的对象类型都是在编译期确定下来的，而Java的反射机制可以动态的创建对象并调用其属性，这样对象的类型在编译期是未知的。所以我们通过反射机制直接创建对象即使这个对象是在编译期是未知的。反射的核心为: 在JVM运行时才动态调用类或调用方法或属性，不需要事先知道运行对象是谁。Java的反射提供的功能如下：
+
 1. 在运行时判断任意一个对象所属的类。
 2. 在运行时构造任意一个对象。
 3. 在运行时判断任意一个类所具有的成员变量和方法（通过反射设置可以调用private）。
@@ -313,6 +318,11 @@ Cookie是客户端保存用户信息的一种机制，用来记录用户的一�
 1. 存储位置不同， session 存储在服务端，cookie存储在客户端
 
 ### session 分布式处理
+
+1. session 复制
+2. session 集中存储
+
+如果只是为了校验一下登录信息，还可以采用一些其他的方案，例如：jwt、token 等
 
 ### JDBC 流程
 
@@ -335,15 +345,11 @@ equals()：用来比较方法两个对象的内容是否相等。
 注意：equals 方法不能用于基本数据类型的变量，如果没有对 equals 方法进行重写，则比较的是引用类型的变 量所指向的对象的地址。
 
 ## 集合
-### List 和 Set 区别
+### List、 Set 和 Map 区别
 
-List 用来存储有序序列，Set用来存储无序集合，List中存放的数据是可重复的，Set存放的数据是唯一的
-
-### List 和 Map 区别
-
-List：是存储单列数据的集合，存储的数据是有序并且是可以重复的。
-
-Map：存储双列数据的集合，通过键值对存储数据，存储 的数据是无序的，Key值不能重复，value值可以重复。
+- List 用来存储有序序列，List中存放的数据是可重复的
+- Set用来存储无序集合，，Set存放的数据是唯一的
+- Map：存储双列数据的集合，通过键值对存储数据，存储 的数据是无序的，Key值不能重复，value值可以重复。
 
 ### ArrayList 与 LinkedList 区别
 
@@ -352,9 +358,9 @@ Map：存储双列数据的集合，通过键值对存储数据，存储 的数�
 区别：
 
 1. 查询上面已经提到
-1. 删除元素，当删除元素时，ArrayList 会将删除位置后所有数据向前移动，效率低，LinkedList只需要移动节点指向即可
-1. 增加元素，当增加元素到List的容量时，ArrayList 需要重新创建一个更大的数组，并将旧数组数据复制到新数组，LinkedList 可直接在尾部追加，无需复制数据
-1. 修改数据，想要改数据得先知道数据在哪吧，所以这里 ArrayList 更有优势
+2. 删除元素，当删除元素时，ArrayList 会将删除位置后所有数据向前移动，效率低，LinkedList只需要移动节点指向即可
+3. 增加元素，当增加元素到List的容量时，ArrayList 需要重新创建一个更大的数组，并将旧数组数据复制到新数组，LinkedList 可直接在尾部追加，无需复制数据
+4. 修改数据，想要改数据得先知道数据在哪吧，所以这里 ArrayList 更有优势
 
 
 ### ArrayList 与 Vector 区别
@@ -491,6 +497,45 @@ Map：存储双列数据的集合，通过键值对存储数据，存储 的数�
 
 在放弃了采用分段锁后，使用了一套新的线程安全方案，首先通过Hash找到对应的链表后，查看是否是第一个Object，如果是，直接用cas原则插入，无需加锁，然后如果不是链表第一个object，则直接用链表第一个object加锁，这里加的锁是synchronized，虽然效率不如 ReentrantLock， 但节约了空间，这里会一直用第一个object为锁， 直到重新计算map大小， 比如扩容或者操作了第一个object为止。
 
+### LinkedHashMap和PriorityQueue的区别
+PriorityQueue 是一个优先级队列,保证最高或者最低优先级的的元素总是在队列头部，但是 LinkedHashMap 维持的顺序是元素插入的顺序。当遍历一个 PriorityQueue 时，没有任何顺序保证，但是 LinkedHashMap 课保证遍历顺序是元素插入的顺序。
+
+### WeakHashMap与HashMap的区别是什么?
+
+WeakHashMap 的工作与正常的 HashMap 类似，但是使用弱引用作为 key，意思就是当 key 对象没有任何引用时，key/value 将会被回收。
+
+### Comparator和Comparable的区别?
+
+Comparable 接口用于定义对象的自然顺序，而 comparator 通常用于定义用户定制的顺序。Comparable 总是只有一个，但是可以有多个 comparator 来定义对象的顺序。
+
+### 如何实现集合排序?
+
+你可以使用有序集合，如 TreeSet 或 TreeMap，你也可以使用有顺序的的集合，如 list，然后通过 Collections.sort() 来排序。
+
+### HashMap的实现原理
+
+1. HashMap概述： HashMap是基于哈希表的Map接口的非同步实现。此实现提供所有可选的映射操作，并允许使用null值和null键。此类不保证映射的顺序，特别是它不保证该顺序恒久不变。 
+
+2. HashMap的数据结构： 在java编程语言中，最基本的结构就是两种，一个是数组，另外一个是模拟指针（引用），所有的数据结构都可以用这两个基本结构来构造的，HashMap也不例外。HashMap实际上是一个“链表散列”的数据结构，即数组和链表的结合体。
+
+当我们往Hashmap中put元素时,首先根据key的hashcode重新计算hash值,根绝hash值得到这个元素在数组中的位置(下标),如果该数组在该位置上已经存放了其他元素,那么在这个位置上的元素将以链表的形式存放,新加入的放在链头,最先加入的放入链尾.如果数组中该位置没有元素,就直接将该元素放到数组的该位置上.
+
+需要注意Jdk 1.8中对HashMap的实现做了优化,当链表中的节点数据超过八个之后,该链表会转为红黑树来提高查询效率,从原来的O(n)到O(logn)
+
+### ConcurrentHashMap的并发度是什么?
+
+ConcurrentHashMap的并发度就是segment的大小，默认为16，这意味着最多同时可以有16条线程操作ConcurrentHashMap，这也是ConcurrentHashMap对Hashtable的最大优势，任何情况下，Hashtable能同时有两条线程获取Hashtable中的数据吗？
+
+ConcurrentHashMap的工作原理
+ConcurrentHashMap在jdk 1.6和jdk 1.8实现原理是不同的.
+
+jdk 1.6:
+ConcurrentHashMap是线程安全的，但是与Hashtablea相比，实现线程安全的方式不同。Hashtable是通过对hash表结构进行锁定，是阻塞式的，当一个线程占有这个锁时，其他线程必须阻塞等待其释放锁。ConcurrentHashMap是采用分离锁的方式，它并没有对整个hash表进行锁定，而是局部锁定，也就是说当一个线程占有这个局部锁时，不影响其他线程对hash表其他地方的访问。 
+具体实现:ConcurrentHashMap内部有一个Segment
+
+jdk 1.8
+在jdk 8中，ConcurrentHashMap不再使用Segment分离锁，而是采用一种乐观锁CAS算法来实现同步问题，但其底层还是“数组+链表->红黑树”的实现。
+
 ### HashMap 的工作原理及代码实现
 
 HashMap 底层是 hash 数组和单向链表实现，数组中的每个元素都是链表，由 Node 内部类（实现 Map.Entry<K,V>接口）实现，HashMap 通过 put & get 方法存储和获取。存储对象时，将 K/V 键值传给 put() 方法：
@@ -548,7 +593,7 @@ iii. 如果 K 的 hash 值在 HashMap 中存在，且它们两者 equals 返回 
     》call()方法可以声明抛出异常
 
    实例代码如下：
-```
+```java
 public class Main {
 
 　　public static void main(String[] args){
@@ -889,9 +934,6 @@ WeakReference与SoftReference的区别?
 
 公共静态不可变（public static final ）变量也就是我们所说的编译期常量，这里的 public 可选的。实际上这些变量在编译时会被替换掉，因为编译器知道这些变量的值，并且知道这些变量在运行时不能改变。这种方式存在的一个问题是你使用了一个内部的或第三方库中的公有编译时常量，但是这个值后面被其他人改变了，但是你的客户端仍然在使用老的值，甚至你已经部署了一个新的jar。为了避免这种情况，当你在更新依赖 JAR 文件时，确保重新编译你的程序。
 
-
-
-
 ### 关于垃圾回收
 你知道哪些垃圾回收算法?
 垃圾回收从理论上非常容易理解,具体的方法有以下几种: 
@@ -1001,20 +1043,6 @@ synchronized是和if、else、for、while一样的关键字，ReentrantLock是�
 一个线程如果出现了运行时异常怎么办?
 如果这个异常没有被捕获的话，这个线程就停止执行了。另外重要的一点是：如果这个线程持有某个某个对象的监视器，那么这个对象监视器会被立即释放
 
-### ConcurrentHashMap的并发度是什么?
-
-ConcurrentHashMap的并发度就是segment的大小，默认为16，这意味着最多同时可以有16条线程操作ConcurrentHashMap，这也是ConcurrentHashMap对Hashtable的最大优势，任何情况下，Hashtable能同时有两条线程获取Hashtable中的数据吗？
-
-ConcurrentHashMap的工作原理
-ConcurrentHashMap在jdk 1.6和jdk 1.8实现原理是不同的.
-
-jdk 1.6:
-ConcurrentHashMap是线程安全的，但是与Hashtablea相比，实现线程安全的方式不同。Hashtable是通过对hash表结构进行锁定，是阻塞式的，当一个线程占有这个锁时，其他线程必须阻塞等待其释放锁。ConcurrentHashMap是采用分离锁的方式，它并没有对整个hash表进行锁定，而是局部锁定，也就是说当一个线程占有这个局部锁时，不影响其他线程对hash表其他地方的访问。 
-具体实现:ConcurrentHashMap内部有一个Segment
-
-jdk 1.8
-在jdk 8中，ConcurrentHashMap不再使用Segment分离锁，而是采用一种乐观锁CAS算法来实现同步问题，但其底层还是“数组+链表->红黑树”的实现。
-
 #### CyclicBarrier和CountDownLatch区别
 这两个类非常类似，都在java.util.concurrent下，都可以用来表示代码运行到某个点上，二者的区别在于：
 
@@ -1038,50 +1066,10 @@ volatile能使得一个非原子操作变成原子操作吗?
 
 volatile 主要有两方面的作用:1.避免指令重排2.可见性保证.例如，JVM 或者 JIT为了获得更好的性能会对语句重排序，但是 volatile 类型变量即使在没有同步块的情况下赋值也不会与其他语句重排序。 volatile 提供 happens-before 的保证，确保一个线程的修改能对其他线程是可见的。某些情况下，volatile 还能提供原子性，如读 64 位数据类型，像 long 和 double 都不是原子的(低32位和高32位)，但 volatile 类型的 double 和 long 就是原子的.
 
-#### LinkedHashMap和PriorityQueue的区别
-PriorityQueue 是一个优先级队列,保证最高或者最低优先级的的元素总是在队列头部，但是 LinkedHashMap 维持的顺序是元素插入的顺序。当遍历一个 PriorityQueue 时，没有任何顺序保证，但是 LinkedHashMap 课保证遍历顺序是元素插入的顺序。
-
-#### WeakHashMap与HashMap的区别是什么?
-
-WeakHashMap 的工作与正常的 HashMap 类似，但是使用弱引用作为 key，意思就是当 key 对象没有任何引用时，key/value 将会被回收。
-
-### #ArrayList和Array有什么区别?
-
-Array可以容纳基本类型和对象，而ArrayList只能容纳对象。
-Array是指定大小的，而ArrayList大小是固定的
-
-#### Comparator和Comparable的区别?
-
-Comparable 接口用于定义对象的自然顺序，而 comparator 通常用于定义用户定制的顺序。Comparable 总是只有一个，但是可以有多个 comparator 来定义对象的顺序。
-
-#### 如何实现集合排序?
-
-你可以使用有序集合，如 TreeSet 或 TreeMap，你也可以使用有顺序的的集合，如 list，然后通过 Collections.sort() 来排序。
-
-#### HashMap的实现原理
-
-1. HashMap概述： HashMap是基于哈希表的Map接口的非同步实现。此实现提供所有可选的映射操作，并允许使用null值和null键。此类不保证映射的顺序，特别是它不保证该顺序恒久不变。 
-
-2. HashMap的数据结构： 在java编程语言中，最基本的结构就是两种，一个是数组，另外一个是模拟指针（引用），所有的数据结构都可以用这两个基本结构来构造的，HashMap也不例外。HashMap实际上是一个“链表散列”的数据结构，即数组和链表的结合体。
-
-当我们往Hashmap中put元素时,首先根据key的hashcode重新计算hash值,根绝hash值得到这个元素在数组中的位置(下标),如果该数组在该位置上已经存放了其他元素,那么在这个位置上的元素将以链表的形式存放,新加入的放在链头,最先加入的放入链尾.如果数组中该位置没有元素,就直接将该元素放到数组的该位置上.
-
-需要注意Jdk 1.8中对HashMap的实现做了优化,当链表中的节点数据超过八个之后,该链表会转为红黑树来提高查询效率,从原来的O(n)到O(logn)
-
-
-
-#### throw和throws的区别
-
-throw用于主动抛出java.lang.Throwable 类的一个实例化对象，意思是说你可以通过关键字 throw 抛出一个 Error 或者 一个Exception，如：throw new IllegalArgumentException(“size must be multiple of 2″), 
-
-而throws 的作用是作为方法声明和签名的一部分，方法被抛出相应的异常以便调用者能处理。Java 中，任何未处理的受检查异常强制在 throws 子句中声明。
-
-
-
 ## JDK 1.8特性
 java 8 在 Java 历史上是一个开创新的版本，下面 JDK 8 中 5 个主要的特性： 
-Lambda 表达式，允许像对象一样传递匿名函数 
-Stream API，充分利用现代多核 CPU，可以写出很简洁的代码 
-Date 与 Time API，最终，有一个稳定、简单的日期和时间库可供你使用 
-扩展方法，现在，接口中可以有静态、默认方法。 
-重复注解，现在你可以将相同的注解在同一类型上使用多次。
+1. Lambda 表达式，允许像对象一样传递匿名函数 
+1. Stream API，充分利用现代多核 CPU，可以写出很简洁的代码 
+1. Date 与 Time API，最终，有一个稳定、简单的日期和时间库可供你使用 
+1. 扩展方法，现在，接口中可以有静态、默认方法。 
+1. 重复注解，现在你可以将相同的注解在同一类型上使用多次。
