@@ -13,36 +13,6 @@
     - [throw和throws的区别](#throw%e5%92%8cthrows%e7%9a%84%e5%8c%ba%e5%88%ab)
     - [抽象类和接口有什么区别](#%e6%8a%bd%e8%b1%a1%e7%b1%bb%e5%92%8c%e6%8e%a5%e5%8f%a3%e6%9c%89%e4%bb%80%e4%b9%88%e5%8c%ba%e5%88%ab)
     - [说说反射的用途及实现](#%e8%af%b4%e8%af%b4%e5%8f%8d%e5%b0%84%e7%9a%84%e7%94%a8%e9%80%94%e5%8f%8a%e5%ae%9e%e7%8e%b0)
-    - [说说自定义注解的场景及实现](#%e8%af%b4%e8%af%b4%e8%87%aa%e5%ae%9a%e4%b9%89%e6%b3%a8%e8%a7%a3%e7%9a%84%e5%9c%ba%e6%99%af%e5%8f%8a%e5%ae%9e%e7%8e%b0)
-    - [HTTP 请求的 GET 与 POST 方式的区别](#http-%e8%af%b7%e6%b1%82%e7%9a%84-get-%e4%b8%8e-post-%e6%96%b9%e5%bc%8f%e7%9a%84%e5%8c%ba%e5%88%ab)
-    - [session 与 cookie 区别](#session-%e4%b8%8e-cookie-%e5%8c%ba%e5%88%ab)
-    - [session 分布式处理](#session-%e5%88%86%e5%b8%83%e5%bc%8f%e5%a4%84%e7%90%86)
-    - [JDBC 流程](#jdbc-%e6%b5%81%e7%a8%8b)
-    - [MVC 设计思想](#mvc-%e8%ae%be%e8%ae%a1%e6%80%9d%e6%83%b3)
-    - [equals 与 == 的区别](#equals-%e4%b8%8e--%e7%9a%84%e5%8c%ba%e5%88%ab)
-  - [集合](#%e9%9b%86%e5%90%88)
-    - [List、 Set 和 Map 区别](#list-set-%e5%92%8c-map-%e5%8c%ba%e5%88%ab)
-    - [ArrayList 与 LinkedList 区别](#arraylist-%e4%b8%8e-linkedlist-%e5%8c%ba%e5%88%ab)
-    - [ArrayList 与 Vector 区别](#arraylist-%e4%b8%8e-vector-%e5%8c%ba%e5%88%ab)
-    - [HashMap 和 Hashtable 的区别](#hashmap-%e5%92%8c-hashtable-%e7%9a%84%e5%8c%ba%e5%88%ab)
-    - [HashSet 和 HashMap 区别](#hashset-%e5%92%8c-hashmap-%e5%8c%ba%e5%88%ab)
-    - [HashMap详解](#hashmap%e8%af%a6%e8%a7%a3)
-    - [HashMap 和 ConcurrentHashMap 的区别](#hashmap-%e5%92%8c-concurrenthashmap-%e7%9a%84%e5%8c%ba%e5%88%ab)
-    - [ConcurrentHashMap中的分段锁](#concurrenthashmap%e4%b8%ad%e7%9a%84%e5%88%86%e6%ae%b5%e9%94%81)
-    - [LinkedHashMap和PriorityQueue的区别](#linkedhashmap%e5%92%8cpriorityqueue%e7%9a%84%e5%8c%ba%e5%88%ab)
-    - [WeakHashMap与HashMap的区别是什么?](#weakhashmap%e4%b8%8ehashmap%e7%9a%84%e5%8c%ba%e5%88%ab%e6%98%af%e4%bb%80%e4%b9%88)
-    - [Comparator和Comparable的区别?](#comparator%e5%92%8ccomparable%e7%9a%84%e5%8c%ba%e5%88%ab)
-    - [如何实现集合排序?](#%e5%a6%82%e4%bd%95%e5%ae%9e%e7%8e%b0%e9%9b%86%e5%90%88%e6%8e%92%e5%ba%8f)
-    - [HashMap的实现原理](#hashmap%e7%9a%84%e5%ae%9e%e7%8e%b0%e5%8e%9f%e7%90%86)
-    - [ConcurrentHashMap的并发度是什么?](#concurrenthashmap%e7%9a%84%e5%b9%b6%e5%8f%91%e5%ba%a6%e6%98%af%e4%bb%80%e4%b9%88)
-    - [HashMap 的工作原理及代码实现](#hashmap-%e7%9a%84%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86%e5%8f%8a%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0)
-    - [ConcurrentHashMap 的工作原理及代码实现](#concurrenthashmap-%e7%9a%84%e5%b7%a5%e4%bd%9c%e5%8e%9f%e7%90%86%e5%8f%8a%e4%bb%a3%e7%a0%81%e5%ae%9e%e7%8e%b0)
-  - [线程](#%e7%ba%bf%e7%a8%8b)
-    - [创建线程的方式及实现](#%e5%88%9b%e5%bb%ba%e7%ba%bf%e7%a8%8b%e7%9a%84%e6%96%b9%e5%bc%8f%e5%8f%8a%e5%ae%9e%e7%8e%b0)
-    - [sleep() 、join（）、yield（）有什么区别](#sleep-joinyield%e6%9c%89%e4%bb%80%e4%b9%88%e5%8c%ba%e5%88%ab)
-    - [说说 CountDownLatch 原理](#%e8%af%b4%e8%af%b4-countdownlatch-%e5%8e%9f%e7%90%86)
-    - [讲讲类的实例化顺序](#%e8%ae%b2%e8%ae%b2%e7%b1%bb%e7%9a%84%e5%ae%9e%e4%be%8b%e5%8c%96%e9%a1%ba%e5%ba%8f)
-    - [说说 CyclicBarrier 原理](#%e8%af%b4%e8%af%b4-cyclicbarrier-%e5%8e%9f%e7%90%86)
     - [说说 Semaphore 原理](#%e8%af%b4%e8%af%b4-semaphore-%e5%8e%9f%e7%90%86)
     - [说说 Exchanger 原理](#%e8%af%b4%e8%af%b4-exchanger-%e5%8e%9f%e7%90%86)
     - [说说 CountDownLatch 与 CyclicBarrier 区别](#%e8%af%b4%e8%af%b4-countdownlatch-%e4%b8%8e-cyclicbarrier-%e5%8c%ba%e5%88%ab)
@@ -303,11 +273,66 @@ throw用于主动抛出java.lang.Throwable 类的一个实例化对象，意思�
 3. 在运行时判断任意一个类所具有的成员变量和方法（通过反射设置可以调用private）。
 4. 在运行时调用任意一个对象的方法。
 
-在Java中反射最重要的用途就是用于开发各种通用的框架。
+在Java中反射最重要的用途就是用于开发各种通用的框架，而且平时的使用“.”就能展示出类所拥有的的方法或者方法的参数也是用到了反射。
+
+Java中很多框架都是配置化的（比如通过XML文件配置Javabean、Action之类的），为了保证框架的通用性，会在运行时根据配置文件的不同加载其对应的类和对象，以调用不同的方法，这里就是根据反射所实现的======在运行时动态加载需要加载的对象。
+
+以上所提及到的是反射可以用于判断任意对象所属的类，获得class对象，构造一个对象以及调用一个对象。反射的基本功能如下：relfect
+
+1. 获取class对象
+   ```
+   （1）、使用 Class类的 forName() 静态方法：
+          public static Class<?> forName(String className)
+          ……
+          在JDBC开发中常用此方法加载数据库驱动:
+          ……java
+          Class.forName(driver)
+   （2）、直接获取某一个对象的 class，比如：
+          Class<?> clazz = int.class;
+          Class<?> classInt = Integer.TYPE;
+   （3）、调用某个对象的getClass() 方法，比如：
+          StringBuilder str = new StringBuilder("123");
+          Class<?> clazz = str.getClass();
+    ```
+2. 判断是否为某个类的实例。
+  
+   一般的来说，通常使用instanceof关键字来判断是否为某个类的实例。同时我们也可以借助反射中class对象的isinstance()方法来判断是否为某个类的实例，这是一个native方法： public native boolean isInstance(Object obj);
+
+3. 创建实例。
+   
+    有以下两种方式：
+
+   （1）使用calss对象中newInstance（）方法来创建对象对应类的类型。
+   ```
+   Class<?> c  = String.calss;
+   Object str = c.getInstance();
+   ```
+   （2）先通过Class对象获取指定的Constructor对象，在调用Constructor对象的newInstance方法来创建实例。这种方法可以用指定的构造器构造类的实例。
+   ```
+     //获取String所对应的Class对象
+     Class<?> c = String.class;
+     //获取String类带一个String参数的构造器
+     Constructor constructor = c.getConstructor(String.class);
+     //根据构造器创建实例
+     Object obj = constructor.newInstance("23333");
+     System.out.println(obj);
+   ```
 
 ### 说说自定义注解的场景及实现
 
+
+
 ### HTTP 请求的 GET 与 POST 方式的区别
+
+首先要知道的是get和post都是http协议中两种发射请求的方法，而http是基于tcp\ip的通讯协议，所以get和post都是基于tcp\ip的通讯链接，两者本源并无区别。但是两者之间有个巨大的差别就是Get产生一个TCP数据包，而Post产生两个TCP数据包。详细的请求过程如下：
+
+1. Get在进行请求时，浏览器会一并把http header和data发送出去，服务器接收到后会响应200。
+2. Post在进行请求时分为两步，会先把http header发送出去，服务器在接收到后会响应100，然后浏览器会把后续的data发送出去，服务器接收到会响应200。
+
+所以一般来说会推荐使用get方式进行请求，因为效率相比于post高一些，其实基于现代网络的性能，两者并无太大差别，只是理论上的差距，相反post两次发送的方式在验证数据包的完整性是一个很大的优点。而且两者都有自己的定义的语义，在使用的时候要注意区分，不能无脑混用。
+
+而且还听说firefox的浏览器，两个方式都是只发送一次。。。。~~~
+
 
 ### session 与 cookie 区别
 
@@ -316,7 +341,12 @@ Session是在服务端保存的一个数据结构，用来跟踪用户的状态�
 Cookie是客户端保存用户信息的一种机制，用来记录用户的一些信息，也是实现Session的一种方式。
 
 1. 存储位置不同， session 存储在服务端，cookie存储在客户端
-
+2. 存储容量不同，session在服务端可以存更多的数据，但是会占据服务器的资源，但是服务器发展到如今的地步，完全可以容纳这些数据；cookie在客户端存储的数据量有限，一般不会超过4K，根据浏览器的不同存储的容量也有一些差别。
+3. 两者的结合使用
+  ```
+  存储在服务端：通过cookie存储一个session_id，然后具体的数据则是保存在session中。如果用户已经登录，则服务器会在cookie中保存一个session_id，下次再次请求的时候，会把该session_id携带上来，服务器根据session_id在session库中获取用户的session数据。就能知道该用户到底是谁，以及之前保存的一些状态信息。这种专业术语叫做server side session。
+  将session数据加密，然后存储在cookie中。这种专业术语叫做client side session。flask采用的就是这种方式，但是也可以替换成其他形式。
+  ```
 ### session 分布式处理
 
 1. session 复制
@@ -333,6 +363,38 @@ Cookie是客户端保存用户信息的一种机制，用来记录用户的一�
 5. 关闭语句和数据库连接
 
 ### MVC 设计思想
+
+MVC(Model View Controller)是一种软件设计的框架模式，它采用模型(Model)-视图(View)-控制器(controller)的方法把业务逻辑、数据与界面显示分离。把众多的业务逻辑聚集到一个部件里面，当然这种比较官方的解释是不能让我们足够清晰的理解什么是MVC的。用通俗的话来讲，MVC的理念就是把数据处理、数据展示(界面)和程序/用户的交互三者分离开的一种编程模式。注意！！是编程模式，不是设计模式。其三个核心部件（也是模式名称的来源）为Model、View、Controller。
+
+1. Model(模型)：所有的用户数据、状态以及程序逻辑，独立于视图和控制器。
+2. View(视图)：呈现模型，类似于Web程序中的界面，视图会从模型中拿到需要展现的状态以及数据，对于相同的数据可以有多种不同的显示形式(视图)。
+3. Controller(控制器)：负责获取用户的输入信息，进行解析并反馈给模型，通常情况下一个视图具有一个控制器。
+
+接下来要说的是为什么要采用MVC的编程模式。
+
+1. 可以使同一个程序使用不同的表现形式，如果控制器反馈给模型的数据发生了变化，那么模型将及时通知有关的视图，视图会对应的刷新自己所展现的内容。
+2. 因为模型是独立于视图的，所以模型可复用，模型可以独立的移植到别的地方继续使用。
+3. 前后端的代码分离，使项目开发的分工更加明确，程序的测试更加简便，提高开发效率。
+4. 降低项目之间的耦合性，使其更方便于后续的维护和开发。
+
+当然MVC模式也有缺点，相对于传统的前后端不分离项目，更不易于调试，也不适用于小型的项目，前后端分离的投入还不如直接不分离。
+
+详细说(chao)下Spring MVC的特点：
+1. 能方便的设计出干净的web层。
+2. 进行更简洁的web层开发。
+3. 天生的与Spring框架集成（比如Ioc、Aop等）;
+4. 能简单的进行web层的单元测试。
+5. 提供强大的约定大于配置的契约式编程支持。
+6. 支持灵活的URL到页面控制器的映射。
+7. 非常容易与其他视图技术集成，因为模型数据不放在特定的API里，而是放在一个model里。
+8. 非常灵活的数据验证、格式化和数据绑定机制，能使用任何对象进行数据绑定，不必实现特定框架的API。
+9. 提供一套强大的JSP标签库，简化JSP开发。
+10. 支持灵活的本地化、主题等解析。
+11. 更加简单的异常处理。
+12. 对静态资源的支持，支持Restful风格。
+
+
+
 
 ### equals 与 == 的区别
 
