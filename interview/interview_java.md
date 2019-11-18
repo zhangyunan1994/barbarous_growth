@@ -10,7 +10,7 @@
     - [final有哪些用法](#final%e6%9c%89%e5%93%aa%e4%ba%9b%e7%94%a8%e6%b3%95)
     - [int 和 Integer 有什么区别](#int-%e5%92%8c-integer-%e6%9c%89%e4%bb%80%e4%b9%88%e5%8c%ba%e5%88%ab)
     - [重载和重写的区别](#%e9%87%8d%e8%bd%bd%e5%92%8c%e9%87%8d%e5%86%99%e7%9a%84%e5%8c%ba%e5%88%ab)
-    - [throw和throws的区别](#throw%e5%92%8cthrows%e7%9a%84%e5%8c%ba%e5%88%ab)
+    - [throw 和 throws 的区别](#throw-%e5%92%8c-throws-%e7%9a%84%e5%8c%ba%e5%88%ab)
     - [抽象类和接口有什么区别](#%e6%8a%bd%e8%b1%a1%e7%b1%bb%e5%92%8c%e6%8e%a5%e5%8f%a3%e6%9c%89%e4%bb%80%e4%b9%88%e5%8c%ba%e5%88%ab)
     - [说说反射的用途及实现](#%e8%af%b4%e8%af%b4%e5%8f%8d%e5%b0%84%e7%9a%84%e7%94%a8%e9%80%94%e5%8f%8a%e5%ae%9e%e7%8e%b0)
     - [聊聊 Redis 使用场景](#%e8%81%8a%e8%81%8a-redis-%e4%bd%bf%e7%94%a8%e5%9c%ba%e6%99%af)
@@ -188,7 +188,7 @@ final 也是很多面试喜欢问的地方,能回答下以下三点就不错了:
 
 ### int 和 Integer 有什么区别
 
-Java 为每一个基本数据类型都引入了对应的包装类型（wrapper class），int 的包装类就是 Integer，int 是基本类型，Integer是包装类型，int 默认值为0，Integer 默认值是 null,Integer 提供了一个简便的方法
+Java 为每一个基本数据类型都引入了对应的包装类型（wrapper class），int 的包装类就是 Integer，int 是基本类型，Integer是包装类型，int 默认值为0，Integer 默认值是 null,Integer 提供了一个简便的方法, 类似问题还有 byte 和 Byte 区别等
 
 ### 重载和重写的区别
 
@@ -211,17 +211,17 @@ Java 为每一个基本数据类型都引入了对应的包装类型（wrapper c
 3. 访问权限不能比父类中被重写的方法的访问权限更低。
 4. 重写的方法能够抛出任何非强制异常（UncheckedException，也叫非运行时异常），无论被重写的方法是 否抛出异常。但是，重写的方法不能抛出新的强制性异常，或者比被重写方法声明的更广泛的强制性异常，反之则 可以。
 
-### throw和throws的区别
+### throw 和 throws 的区别
 
-throw用于主动抛出java.lang.Throwable 类的一个实例化对象，意思是说你可以通过关键字 throw 抛出一个 Error 或者 一个Exception，如：throw new IllegalArgumentException(“size must be multiple of 2″), 
+`throw` 用于主动抛出 `java.lang.Throwable` 类的一个实例化对象，意思是说你可以通过关键字 `throw` 抛出一个 `Error` 或者 一个`Exceptio`n，如：`throw new IllegalArgumentException(“size must be multiple of 2″)`
 
-而throws 的作用是作为方法声明和签名的一部分，方法被抛出相应的异常以便调用者能处理。Java 中，任何未处理的受检查异常强制在 throws 子句中声明。
+而 `throws` 的作用是作为方法声明和签名的一部分，方法被抛出相应的异常以便调用者能处理。Java 中，任何未处理的受检查异常强制在 `throws` 子句中声明。
 
 ### 抽象类和接口有什么区别
 
 **抽象类**
 
-抽象类是用来捕捉子类的通用特性的 。它不能被实例化，只能被用作子类的超类。抽象类是被用来创建继承层级里子类的模板
+抽象类是用来捕捉子类的通用特性的。它不能被实例化，只能被用作子类的超类。抽象类是被用来创建继承层级里子类的模板
 
 **接口**
 
@@ -294,14 +294,11 @@ Java中很多框架都是配置化的（比如通过XML文件配置Javabean、Ac
 
 所以一般来说会推荐使用get方式进行请求，因为效率相比于post高一些，其实基于现代网络的性能，两者并无太大差别，只是理论上的差距，相反post两次发送的方式在验证数据包的完整性是一个很大的优点。而且两者都有自己的定义的语义，在使用的时候要注意区分，不能无脑混用。
 
-而且还听说firefox的浏览器，两个方式都是只发送一次。。。。~~~
-
-
 ### session 与 cookie 区别
 
-Session是在服务端保存的一个数据结构，用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件中；
+`Session` 是在服务端保存的一个数据结构，用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件中；
 
-Cookie是客户端保存用户信息的一种机制，用来记录用户的一些信息，也是实现Session的一种方式。
+`Cookie` 是客户端保存用户信息的一种机制，用来记录用户的一些信息，也是实现Session的一种方式。
 
 1. 存储位置不同， session 存储在服务端，cookie存储在客户端
 2. 存储容量不同，session在服务端可以存更多的数据，但是会占据服务器的资源，但是服务器发展到如今的地步，完全可以容纳这些数据；cookie在客户端存储的数据量有限，一般不会超过4K，根据浏览器的不同存储的容量也有一些差别。
@@ -356,9 +353,6 @@ MVC(Model View Controller)是一种软件设计的框架模式，它采用模型
 11. 更加简单的异常处理。
 12. 对静态资源的支持，支持Restful风格。
 
-
-
-
 ### equals 与 == 的区别
 
 equals 和 == 最大的区别是一个是方法一个是运算符。
@@ -370,6 +364,7 @@ equals()：用来比较方法两个对象的内容是否相等。
 注意：equals 方法不能用于基本数据类型的变量，如果没有对 equals 方法进行重写，则比较的是引用类型的变 量所指向的对象的地址。
 
 ## 集合
+
 ### List、 Set 和 Map 区别
 
 - List 用来存储有序序列，List中存放的数据是可重复的
