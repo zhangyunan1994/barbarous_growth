@@ -1,10 +1,6 @@
 <h1> barbarous growth </h1>
 
 **Table of Contents**
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [学习资料](#%e5%ad%a6%e4%b9%a0%e8%b5%84%e6%96%99)
 - [入门](#%e5%85%a5%e9%97%a8)
 - [中级篇](#%e4%b8%ad%e7%ba%a7%e7%af%87)
@@ -26,8 +22,6 @@
 - [项目推荐](#%e9%a1%b9%e7%9b%ae%e6%8e%a8%e8%8d%90)
 - [个人小传](#%e4%b8%aa%e4%ba%ba%e5%b0%8f%e4%bc%a0)
 - [参考书籍和资料](#%e5%8f%82%e8%80%83%e4%b9%a6%e7%b1%8d%e5%92%8c%e8%b5%84%e6%96%99)
-
-<!-- /code_chunk_output -->
 
 > 主要内容
 
