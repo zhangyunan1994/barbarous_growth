@@ -1,4 +1,4 @@
-<h1> 编写高质量代码 </h1>
+<h1> 编写高质量代码, 改善Java程序的151个建议 </h1>
 
 > 内容来自 https://blog.csdn.net/aishangyutian12/article/details/52699938 并对部分内容进行了删减和补充，有兴趣的同学可以看原著
 
