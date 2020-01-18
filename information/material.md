@@ -45,13 +45,6 @@ https://github.com/Alibaba-Technology/Alibaba-Technology-Book-Series
 
 ## GitHub Java Top
 
-
-Column A | Column B | Column C
----------|----------|---------
- A1 | B1 | C1
- A2 | B2 | C2
- A3 | B3 | C3
-
 名称|全名|stars|描述
 :---|:---|:---|:---
 CS-Notes | CyC2018/CS-Notes | 88861 | :books: 技术面试必备基础知识、Leetcode、计算机操作系统、计算机网络、系统设计、Java、Python、C++
