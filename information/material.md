@@ -45,7 +45,7 @@ https://github.com/Alibaba-Technology/Alibaba-Technology-Book-Series
 
 ## GitHub Java Top
 
-名称|全名|stars|描述
+名称|stars|描述
 :---|:---|:---|:---
 [CS-Notes](https://github.com/CyC2018/CS-Notes) | 88881 | :books: 技术面试必备基础知识、Leetcode、计算机操作系统、计算机网络、系统设计、Java、Python、C++
 [JavaGuide](https://github.com/Snailclimb/JavaGuide) | 67885 | 【Java学习+面试指南】 一份涵盖大部分Java程序员所需要掌握的核心知识。
