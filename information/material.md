@@ -5,6 +5,15 @@
 名称 | 地址 | 描述
 ---------|----------|---------
  segmentfault | https://segmentfault.com/ | 思否
+ csdn | https://www.csdn.net/ | csdn
+ 博客园 | https://www.cnblogs.com/ |
+ 稀土 | http://e.xitu.io/ |
+ 简书 | https://www.jianshu.com/ |
+ 廖雪峰 | https://www.liaoxuefeng.com/ | Python, Git 等入门教程
+ GitHub | https://github.com/ | 最大的同性交友平台
+ 码云 | https://gitee.com/ | 中国同性交友平台，支持私密交友，网速快一点 
+ ibm 开发者文档 | https://www.ibm.com/developerworks/cn/ |
+
 
 
 ## Java 相关
