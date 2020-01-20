@@ -23,7 +23,7 @@
  javaok | https://github.com/xjjdog/javaok | 后端技能汇总
  JavaGuide | https://github.com/Snailclimb/JavaGuide | java向导
  advanced-java | https://github.com/doocs/advanced-java | advanced-java
- CS-Notes | https://github.com/CyC2018/CS-Notes | 
+ CS-Notes | https://github.com/CyC2018/CS-Notes | CS-Notes
 
 ## 大会资料
 
