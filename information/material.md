@@ -1,5 +1,17 @@
 # 学习资料
 
+## Java 相关
+
+名称 | 描述
+---------|----------
+ [javaok](https://github.com/xjjdog/javaok) | 必看！java后端，亮剑诛仙。java发展路线技术要点。
+ [JavaGuide](https://github.com/Snailclimb/JavaGuide) |【Java学习+面试指南】 一份涵盖大部分Java程序员所需要掌握的核心知识。
+ [advanced-java](https://github.com/doocs/advanced-java) | 互联网 Java 工程师进阶知识完全扫盲：涵盖高并发、分布式、高可用、微服务、海量数据处理等领域知识，后端同学必看，前端同学也可学习
+ [CS-Notes](https://github.com/CyC2018/CS-Notes) | 📚 技术面试必备基础知识、Leetcode、计算机操作系统、计算机网络、系统设计、Java、Python、C++
+ [interviews](https://github.com/kdn251/interviews) | Everything you need to know to get the job.
+ [toBeTopJavaer](https://github.com/hollischuang/toBeTopJavaer) | To Be Top Javaer - Java工程师成神之路
+[fullstack-tutorial](https://github.com/frank-lam/fullstack-tutorial) | 🚀 fullstack tutorial 2019，后台技术栈/架构师之路/全栈开发社区，春招/秋招/校招/面试
+
 ## 博客网站
 
 名称 | 地址 | 描述
@@ -16,14 +28,7 @@
 
 
 
-## Java 相关
 
-名称 | 地址 | 描述
----------|----------|---------
- javaok | https://github.com/xjjdog/javaok | 后端技能汇总
- JavaGuide | https://github.com/Snailclimb/JavaGuide | java向导
- advanced-java | https://github.com/doocs/advanced-java | advanced-java
- CS-Notes | https://github.com/CyC2018/CS-Notes | CS-Notes
 
 ## 大会资料
 
