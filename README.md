@@ -180,22 +180,7 @@
 
 # 参考书籍和资料
 
-> [书籍列表](./information/books.md)
-
-1. 算法导论 第三版
-2. 收获，不知Oracle
-3. HTML5 与 CSS3 基础教程
-4. Vuejs 权威指南
-5. Spring Boot 实战
-6. Maven 实战
-7. Spring Cloud 与 Docker 微服务架构实战
-8. Spring 实战
-9. Python Web 实战
-10. 高性能MySQL
-11. 流程的Python
-12. TensorFlow实战
-13. 算法基础
-14. Linux命令行与shell脚本编程大全
+> [书籍列表](./books.md)
 
 ---
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">barbarous growth</span> 由 <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">777</span> 采用 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享 署名-相同方式共享 4.0 国际 许可协议</a>进行许可。
