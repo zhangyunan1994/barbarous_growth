@@ -4,6 +4,8 @@
 
 名称 | 描述
 ---------|----------
+ [free-books](https://github.com/ruanyf/free-books) | 免费书籍
+ [awesome](https://github.com/topics/awesome) | awesome 合集
  [javaok](https://github.com/xjjdog/javaok) | 必看！java后端，亮剑诛仙。java发展路线技术要点。
  [JavaGuide](https://github.com/Snailclimb/JavaGuide) |【Java学习+面试指南】 一份涵盖大部分Java程序员所需要掌握的核心知识。
  [advanced-java](https://github.com/doocs/advanced-java) | 互联网 Java 工程师进阶知识完全扫盲：涵盖高并发、分布式、高可用、微服务、海量数据处理等领域知识，后端同学必看，前端同学也可学习
@@ -32,10 +34,6 @@
  码云 | https://gitee.com/ | 中国同性交友平台，支持私密交友，网速快一点 
  ibm 开发者文档 | https://www.ibm.com/developerworks/cn/ |
 
-
-
-
-
 ## 大会资料
 
 名称 | 地址 
@@ -43,17 +41,17 @@
  2017杭州云栖大会精华PPT | https://github.com/Alibaba-Technology/hangzhouYunQi2017ppt 
  云栖大会 | https://github.com/alibaba-developer/Technical-Meeting 
 
-## 2. 免费书籍
-https://github.com/ruanyf/free-books
-
-## 5. awesome
-https://github.com/topics/awesome
-
-# ppt资料
-
 ## 阿里技术丛书
 https://github.com/Alibaba-Technology/Alibaba-Technology-Book-Series
 
+## 美团相关
+
+- 【前端篇】：http://dpurl.cn/Xy6IOU4
+- 【后台篇】：http://dpurl.cn/DPm3hdo
+- 【算法篇】：http://dpurl.cn/gIIjhRw
+- 【大数据篇】：http://dpurl.cn/Lb7j5xA
+- 【学术论文篇】：http://dpurl.cn/4KE72hn
+- 【2019美团点评技术文章合辑】：http://dpurl.cn/9zvkFYe
 
 ## GitHub Java Top
 
