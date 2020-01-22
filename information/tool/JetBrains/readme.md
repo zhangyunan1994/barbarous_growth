@@ -1,0 +1,9 @@
+  - findbugs
+  - Free Mybatis plugin
+  - grep console 自定义日志级别颜色
+  - gson format 根据json生成实体类
+  - javadoc 快速生成注释
+  - JRebel 热部署插件
+  - Rainbow Brackets 🌈括号
+  - restfultoolkit 快速定位你想要接口
+  - string manipulation 多种格式化你的字符串
