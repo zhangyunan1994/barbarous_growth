@@ -20,8 +20,8 @@
 - [DevOps](#devops)
 - [软技能](#%e8%bd%af%e6%8a%80%e8%83%bd)
 - [项目推荐](#%e9%a1%b9%e7%9b%ae%e6%8e%a8%e8%8d%90)
-- [个人小传](#%e4%b8%aa%e4%ba%ba%e5%b0%8f%e4%bc%a0)
 - [参考书籍和资料](#%e5%8f%82%e8%80%83%e4%b9%a6%e7%b1%8d%e5%92%8c%e8%b5%84%e6%96%99)
+- [后记](#%e5%90%8e%e8%ae%b0)
 
 > 主要内容
 
@@ -176,11 +176,14 @@
 
 - awesome 相关项目
 
-# 个人小传
+
 
 # 参考书籍和资料
 
 > [书籍列表](./books.md)
+
+# 后记
+
 
 ---
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">barbarous growth</span> 由 <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">777</span> 采用 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享 署名-相同方式共享 4.0 国际 许可协议</a>进行许可。
