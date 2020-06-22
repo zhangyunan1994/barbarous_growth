@@ -27,26 +27,26 @@
 
 # 学习资料
 
-[来点这里](./information/material.md)
+[来点这里](./material/information/material.md)
 
 # 入门
 
-* 编程语言：[Java](./information/language/java) / [Python](./information/language/python/) / [Go](./information/language/go/) /
+* 编程语言：[Java](./material/information/language/java) / [Python](./material/information/language/python/) / [Go](./material/information/language/go/) /
 * Web框架，如Spring MVC、Flask、Django等等
-* ORM框架，如Spring JDBC、[Mybatis](./information/orm/Mybatis/)、Hibernate、JPA、jade、sqlalchemy、django orm
+* ORM框架，如Spring JDBC、[Mybatis](./material/information/orm/Mybatis/)、Hibernate、JPA、jade、sqlalchemy、django orm
 * HTTP协议基础
     
 # 中级篇
 
-* [Java 反射和注解的使用](./information/language/java/reflection/readme.md)
+* [Java 反射和注解的使用](./material/information/language/java/reflection/readme.md)
 * AOP编程
-* [API设计](./information/api/readme.md)
+* [API设计](./material/information/api/readme.md)
 * 项目调试
 * 数据结构与算法
 * 面向对象编程
 * 网络通信协议，如TCP / Socket
-* [linux 常用命令以及环境搭建](./information/linux)
-* [Spring 篇](./information/spring/)
+* [linux 常用命令以及环境搭建](./material/information/linux)
+* [Spring 篇](./material/information/spring/)
 
 # 高级篇
 
@@ -55,18 +55,18 @@
 * 领域驱动设计
 * MVC架构
 * 运行环境优化，如JVM
-* [设计模式](./information/designPatten/)
+* [设计模式](./material/information/designPatten/)
 * 事务,如多数据源事务、分布式事务
     
 # 工程化
 
-* 版本管理 [GIT](./information/git/)、SVN
+* 版本管理 [GIT](./material/information/git/)、SVN
 * 单元测试
-* 包管理 [maven](./information/dependencyManagement/Maven/)、gradle、pip、venv
+* 包管理 [maven](./material/information/dependencyManagement/Maven/)、gradle、pip、venv
 
 # 基础设施
 
-* 虚拟化，如[Docker](./information/docker/)
+* 虚拟化，如[Docker](./material/information/docker/)
 * 自动化部署
 * 应用包创建、管理、发布
 * 发布脚本编写
@@ -82,10 +82,10 @@
 # 数据持久化
 
 * SQL
-  * [MySQL](./information/db/mysql/readme.md)
+  * [MySQL](./material/information/db/mysql/readme.md)
   * Oracle
 * NoSQL
-  * [Redis](./information/nosql/Redis/README.md)
+  * [Redis](./material/information/nosql/Redis/README.md)
 * 搜索引擎 elasticsearch、solr
 
 # 数据库
@@ -128,14 +128,14 @@
 # 消息
 
 * JMS
-* [ActiveMQ](./information/mq/ActiveMQ/)
+* [ActiveMQ](./material/information/mq/ActiveMQ/)
 * kafka
 * rabbitmq
 * rokt
 
 # 面试相关
 
-[详见](./interview/)
+[详见](./material/interview/)
 
 # 解决方案
 
@@ -180,11 +180,11 @@
 
 # 参考书籍和资料
 
-> [书籍列表](./books.md)
+> [书籍列表](./material/books.md)
 
 # 后记
 
 
 ---
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">barbarous growth</span> 由 <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">777</span> 采用 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享 署名-相同方式共享 4.0 国际 许可协议</a>进行许可。
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">barbarous growth</span> 由 <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">双鬼带单</span> 采用 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享 署名-相同方式共享 4.0 国际 许可协议</a>进行许可。
 
