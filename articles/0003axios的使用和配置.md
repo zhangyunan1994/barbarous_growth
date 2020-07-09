@@ -11,6 +11,8 @@
   - [DELETE](#delete)
   - [PUT](#put)
   - [POST](#post)
+  - [PATCH](#patch)
+  - [汇总](#汇总)
 - [使用 `application/x-www-form-urlencoded`](#使用-applicationx-www-form-urlencoded)
   - [方式一：使用 `URLSearchParams`](#方式一使用-urlsearchparams)
   - [方式二：使用 `qs` 进行编码](#方式二使用-qs-进行编码)
@@ -32,7 +34,7 @@ Github开源地址： https://github.com/axios/axios
 
 如果按照`HTTP`方法的语义来暴露资源，那么接口将会拥有安全性和幂等性的特性，例如GET和HEAD请求都是安全的， 无论请求多少次，都不会改变服务器状态。而GET、HEAD、PUT和DELETE请求都是幂等的，无论对资源操作多少次， 结果总是一样的，后面的请求并不会产生比第一次更多的影响。
 
-下面列出了GET，DELETE，PUT和POST的典型用法:
+下面列出了 `GET`，`DELETE`，`PUT`, `PATCH` 和 `POST` 的典型用法:
 
 ## GET
 
@@ -157,14 +159,13 @@ axios.delete('/user', {
 > 2. 第二个参数 `config` 选填, 关于`config` 的属性见下文
 
 1. 不安全但幂等
-2. 用客户端管理的实例号创建一个资源
-3. 通过替换的方式更新资源
+2. 通过替换的方式更新资源
 
 > 常见使用方式
 
 1. 使用 PUT 方法进行请求，参数可以直接拼接在 url 中
 
-**如果没有id未123456的用户则创建，有则替换**
+**更新资源**
 
 ```js 
 axios.put('/user?id=12345&name=abc')
@@ -187,7 +188,7 @@ axios.put('/user?id=12345&name=abc')
 
 let request_params = { id: 123456, name: "abc" }
 
-axios.post('/user', request_params,
+axios.put('/user', request_params,
   .then(function (response) {
     console.log(response);
   })
@@ -208,15 +209,13 @@ axios.post('/user', request_params,
 > 2. 第二个参数 `config` 选填, 关于`config` 的属性见下文
 
 1. 不安全且不幂等
-2. 使用服务端管理的（自动产生）的实例号创建资源
-3. 创建子资源
-4. 部分更新资源
+2. 创建资源
 
 > 常见使用方式
 
 1. 使用 POST 方法进行请求，参数可以直接拼接在 url 中
 
-**如果没有id未123456的用户则创建，有则部分更新**
+**创建id为123456的用户**
 
 ```js 
 axios.post('/user?id=12345&name=abc')
@@ -250,6 +249,79 @@ axios.post('/user', request_params,
     // always executed
   });
 ```
+
+## PATCH
+
+> `axios.patch(url[, data[, config]])`<br>
+> 从方法声明可以看出
+> 1. 第一个参数`url`必填，为请求的url
+> 2. 第二个参数`data`选填，为请求的参数，且在请求体中
+> 2. 第二个参数 `config` 选填, 关于`config` 的属性见下文
+
+1. 不安全且不幂等
+2. 在服务器更新资源（客户端提供改变的属性，部分更新）
+
+> 常见使用方式
+
+1. 使用 PATCH 方法进行请求，参数可以直接拼接在 url 中
+
+**更新id为123456的用户资源**
+
+```js 
+axios.patch('/user?id=12345&name=abc')
+  .then(response => {
+    // 如果成功返回（http 状态码在 200~300），则可获取对应的 response
+    console.log(response);
+  })
+  .catch(error => {
+    // 异常
+    console.log(error);
+  })
+  .then(() => {
+    // always executed
+  });
+```
+
+1. 使用 PATCH 方法进行请求，参数单独作为一个对象传入, 该参数会在请求体中
+
+```js
+
+let request_params = { id: 123456, name: "abc" }
+
+axios.patch('/user', request_params,
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
+```
+
+## 汇总
+
+从上面的示例中可以看出
+
+```js
+axios.get(url[, config])
+axios.delete(url[, config])
+axios.post(url[, data[, config]])
+axios.put(url[, data[, config]])
+axios.patch(url[, data[, config]])
+```
+
+其中 `POST`、`PUT`、`PATCH` 的使用方式是一致的，只是`方式名`和 `http method` 存在差异, 那他们的区别在什么地方呢
+
+```
+GET：从服务器取出资源（一项或多项）。
+POST：在服务器新建一个资源。
+PUT：在服务器更新资源（客户端提供改变后的完整资源）。
+PATCH：在服务器更新资源（客户端提供改变的属性）。
+DELETE：从服务器删除资源。
+```
+
 
 # 使用 `application/x-www-form-urlencoded`
 
@@ -288,17 +360,21 @@ axios.post('user', form, { headers: form.getHeaders() })
 ```js
 {
   // `data` is the response that was provided by the server
+  // response 返回数据
   data: {},
 
   // `status` is the HTTP status code from the server response
+  // 状态码
   status: 200,
 
   // `statusText` is the HTTP status message from the server response
+  // 状态码对应的标准message
   statusText: 'OK',
 
   // `headers` the HTTP headers that the server responded with
   // All header names are lower cased and can be accessed using the bracket notation.
   // Example: `response.headers['content-type']`
+  // 响应头
   headers: {},
 
   // `config` is the config that was provided to `axios` for the request
@@ -383,13 +459,7 @@ axios.post('user', form, { headers: form.getHeaders() })
   // should be made using credentials
   withCredentials: false, // default
 
-
-
   // `auth` indicates that HTTP Basic auth should be used, and supplies credentials.
-  // This will set an `Authorization` header, overwriting any existing
-  // `Authorization` custom headers you have set using `headers`.
-  // Please note that only HTTP Basic auth is configurable through this parameter.
-  // For Bearer tokens and such, use `Authorization` custom headers instead.
   auth: {
     username: 'janedoe',
     password: 's00pers3cret'
