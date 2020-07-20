@@ -1,23 +1,43 @@
-<h1> 全栈的自我修养: 0004 Java 包扫描实现和应用(File篇) </h1>
+<h1> 全栈的自我修养: 0005 Java 包扫描实现和应用(Jar篇) </h1>
 
-> I may not be able to change the past, but I can learn from it.<br>
-> 我也许不能改变过去发生的事情，但能向过去学习。<br>
+> It's not the altitude, it's the attitude.<br>
+> 决定一切的不是高度而是态度。<br>
 
-- [用途](#用途)
-- [思路](#思路)
-- [一些小功能](#一些小功能)
-- [简要设计](#简要设计)
-- [具体实现](#具体实现)
-  - [1. 将包路径转换为文件路径](#1-将包路径转换为文件路径)
-  - [2. 获取真实的路径](#2-获取真实的路径)
-  - [3. 识别文件，并进行递归遍历](#3-识别文件并进行递归遍历)
-- [测试](#测试)
-- [完整代码](#完整代码)
+
 
 如果你曾经使用过 `Spring`, 那你已经配过 包扫描路径吧，那包扫描是怎么实现的呢？让我们自己写个包扫描
 
+上篇文章中介绍了使用 `File` 遍历的方式去进行包扫描，这篇主要补充一下`jar`包的扫描方式，在我们的项目中一般都会去依赖一些其他`jar` 包，
 
-# 用途
+
+比如添加 guava 依赖
+
+```xml
+<dependency>
+    <groupId>com.google.guava</groupId>
+    <artifactId>guava</artifactId>
+    <version>28.2-jre</version>
+</dependency>
+```
+
+我们再次运行上次的测试用例
+
+```java
+@Test
+public void testGetPackageAllClasses() throws IOException, ClassNotFoundException {
+    ClassScanner scanner = new ClassScanner("com.google.common.cache", true, null, null);
+    Set<Class<?>> packageAllClasses = scanner.doScanAllClasses();
+    packageAllClasses.forEach(it -> {
+        System.out.println(it.getName());
+    });
+}
+```
+
+什么都没有输出
+
+
+
+# 依赖的 Jar 
 基于`Java` 的反射机制，我们很容易根据 `class` 去创建一个实例对象，但如果我们根本不知道某个包下有多少对象时，我们应该怎么做呢？
 
 在使用`Spring`框架时，会根据包扫描路径来找到所有的 `class`, 并将其实例化后存入容器中。
