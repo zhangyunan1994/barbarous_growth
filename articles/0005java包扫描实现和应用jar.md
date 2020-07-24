@@ -3,6 +3,12 @@
 > It's not the altitude, it's the attitude.<br>
 > 决定一切的不是高度而是态度。<br>
 
+**Table of Contents**
+
+- [依赖的 Jar](#依赖的-jar)
+- [思路](#思路)
+- [完整代码](#完整代码)
+- [整合后代码](#整合后代码)
 
 
 如果你曾经使用过 `Spring`, 那你已经配过 包扫描路径吧，那包扫描是怎么实现的呢？让我们自己写个包扫描
@@ -35,8 +41,6 @@ public void testGetPackageAllClasses() throws IOException, ClassNotFoundExceptio
 
 什么都没有输出
 
-
-
 # 依赖的 Jar 
 基于`Java` 的反射机制，我们很容易根据 `class` 去创建一个实例对象，但如果我们根本不知道某个包下有多少对象时，我们应该怎么做呢？
 
@@ -46,169 +50,97 @@ public void testGetPackageAllClasses() throws IOException, ClassNotFoundExceptio
 
 # 思路
 
-在一开始的我们为了上传文件和下载文件这种需求，请求会在程序运行的时候去获取当前项目运行的父路径是什么，比如下面的代码`
-使用Class类的getResource("").getPath()获取当前.class文件所在的路径`, 或者使用 `File` 来实现
+既然知道是采用了 `jar` , 那我们使用遍历 jar 的方式去处理一下 
 
 ```java
-//实例化一个File对象。参数不同时，获取的最终结果也不同, 这里可以将 path 替换为要扫描的包路劲 例如 org/example
-String path = "";
 
-File directory = new File(path); 
-//获取标准路径。该方法需要放置在try/catch块中，或声明抛出异常
-directory.getCanonicalPath();
-//获取绝对路径
-directory.getAbsolutePath();
-```
+JarFile jar = ((JarURLConnection) url.openConnection()).getJarFile();
+// 遍历jar包中的元素
+Enumeration<JarEntry> entries = jar.entries();
 
-其中传入指定路径
-
-```java
-Enumeration<URL> resources = Thread.currentThread().getContextClassLoader().getResources("org/example");
-
-while (resources.hasMoreElements()) {
-  URL url = resources.nextElement();
-  System.out.println(url.toString());
+while (entries.hasMoreElements()) {
+  JarEntry entry = entries.nextElement();
+  String name = entry.getName();
 }
 ```
 
-输出为
-
-```
-file:/Users/zhangyunan/project/spring-demo/java8-demo/target/test-classes/org/example
-file:/Users/zhangyunan/project/spring-demo/java8-demo/target/classes/org/example
-
-```
-
-
-# 一些小功能
-
-通过上面的代码，我们可以大概知道使用 `File` 遍历方式可以简单实现一部分包扫描，那我们定义个扫描器应该有的功能和特定吧
-
-1. 可以根据指定的包进行扫描
-2. 可以排除一些类或者包名
-3. 可以过滤一些包或者类
-
-关于过滤可以使用 `Java8` 的 `Predicate` 来实现，
-
-
-# 简要设计
-
-```java
-/**
- * class 扫描器
- * 
- * @author zhangyunan
- */
-public class ClassScanner {
-
-
-  /**
-   * Instantiates a new Class scanner.
-   *
-   * @param basePackage      the base package
-   * @param recursive        是否递归扫描
-   * @param packagePredicate the package predicate
-   * @param classPredicate   the class predicate
-   */
-  public ClassScanner(String basePackage, boolean recursive, Predicate<String> packagePredicate, Predicate<Class> classPredicate) {
-
-  }
-
-  /**
-   * Do scan all classes set.
-   *
-   * @return the set
-   */
-  public Set<Class<?>> doScanAllClasses() {
-    return null;
-  }
-}
-```
-
-# 具体实现
-
-## 1. 将包路径转换为文件路径
-
-当我们要扫描一个 `org.example` 包时，首先将其转换为文件格式 `org/example`, 来使用`File` 遍历方式
- 
-```java
-String basePackage = "org.example";
-// 如果最后一个字符是“.”，则去掉
-if (basePackage.endsWith(".")) {
-  basePackage = basePackage.substring(0, basePackage.lastIndexOf('.'));
-}
-// 将包名中的“.”换成系统文件夹的“/”
-String basePackageFilePath = basePackage.replace('.', '/');
-```
-
-## 2. 获取真实的路径
-
-```java
-Enumeration<URL> resources = Thread.currentThread().getContextClassLoader().getResources(basePackageFilePath);
-
-while (resources.hasMoreElements()) {
-  URL resource = resources.nextElement();
-
-}
-```
-
-这里需要关注下 `resource` 的类型, 如果是 `File` 和 `Jar` 则进行解析，这篇文章主要进行 `File` 操作
-
-## 3. 识别文件，并进行递归遍历
-
-```java
-String protocol = resource.getProtocol();
-if ("file".equals(protocol)) {
-  String filePath = URLDecoder.decode(resource.getFile(), "UTF-8");
-  // 扫描文件夹中的包和类
-  doScanPackageClassesByFile(classes, packageName, filePath, recursive);
-}
-
-```
-
-# 测试
-
-项目结构
-
-![](img/package_scan.png)
+这里获取的name 格式为 `com/google/common/cache/Cache.class` 是不是和上篇的文件路径很像呀, 这里可以通过对 `name` 进行操作获取`包名`和 `class`
 
 
 ```java
-@Test
-public void testGetPackageAllClasses() throws IOException, ClassNotFoundException {
+// 获取包名
+String jarPackageName = name.substring(0, name.lastIndexOf('/')).replace("/", ".");
 
-  Predicate<String> packagePredicate = s -> true;
-
-  ClassScanner scanner = new ClassScanner("org.example", true, packagePredicate, null);
-  Set<Class<?>> packageAllClasses = scanner.doScanAllClasses();
-  packageAllClasses.forEach(it -> {
-    System.out.println(it.getName());
-  });
-}
-```
-
-结果
-
-```
-org.example.ClassScannerTest
-org.example.mapper.UserMapper
-org.example.App
-org.example.ClassScanner
+// 获取 class 路径, 这样就能通过类加载进行加载了
+String className = name.replace('/', '.');
+className = className.substring(0, className.length() - 6);
 ```
 
 # 完整代码
 
 ```java
+private void doScanPackageClassesByJar(String basePackage, URL url, Set<Class<?>> classes)
+    throws IOException, ClassNotFoundException {
+  // 包名
+  String packageName = basePackage;
+  // 获取文件路径
+  String basePackageFilePath = packageName.replace('.', '/');
+  // 转为jar包
+  JarFile jar = ((JarURLConnection) url.openConnection()).getJarFile();
+  // 遍历jar包中的元素
+  Enumeration<JarEntry> entries = jar.entries();
+  while (entries.hasMoreElements()) {
+    JarEntry entry = entries.nextElement();
+    String name = entry.getName();
+    // 如果路径不一致，或者是目录，则继续
+    if (!name.startsWith(basePackageFilePath) || entry.isDirectory()) {
+      continue;
+    }
+    // 判断是否递归搜索子包
+    if (!recursive && name.lastIndexOf('/') != basePackageFilePath.length()) {
+      continue;
+    }
+
+    if (packagePredicate != null) {
+      String jarPackageName = name.substring(0, name.lastIndexOf('/')).replace("/", ".");
+      if (!packagePredicate.test(jarPackageName)) {
+        continue;
+      }
+    }
+
+    // 判定是否符合过滤条件
+    String className = name.replace('/', '.');
+    className = className.substring(0, className.length() - 6);
+    // 用当前线程的类加载器加载类
+    Class<?> loadClass = Thread.currentThread().getContextClassLoader().loadClass(className);
+    if (classPredicate == null || classPredicate.test(loadClass)) {
+      classes.add(loadClass);
+    }
+
+  }
+}
+```
+
+在结合上篇中 `File` 扫描方式就是完成的代码了
+
+
+# 整合后代码
+
+```java
+package org.example;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * class 扫描器
@@ -267,31 +199,73 @@ public class ClassScanner {
       if ("file".equals(protocol)) {
         String filePath = URLDecoder.decode(resource.getFile(), "UTF-8");
         // 扫描文件夹中的包和类
-        doScanPackageClassesByFile(classes, packageName, filePath, recursive);
+        doScanPackageClassesByFile(classes, packageName, filePath);
+      } else if ("jar".equals(protocol)) {
+        doScanPackageClassesByJar(packageName, resource, classes);
       }
     }
 
     return classes;
   }
 
+  private void doScanPackageClassesByJar(String basePackage, URL url, Set<Class<?>> classes)
+    throws IOException, ClassNotFoundException {
+    // 包名
+    String packageName = basePackage;
+    // 获取文件路径
+    String basePackageFilePath = packageName.replace('.', '/');
+    // 转为jar包
+    JarFile jar = ((JarURLConnection) url.openConnection()).getJarFile();
+    // 遍历jar包中的元素
+    Enumeration<JarEntry> entries = jar.entries();
+    while (entries.hasMoreElements()) {
+      JarEntry entry = entries.nextElement();
+      String name = entry.getName();
+      // 如果路径不一致，或者是目录，则继续
+      if (!name.startsWith(basePackageFilePath) || entry.isDirectory()) {
+        continue;
+      }
+      // 判断是否递归搜索子包
+      if (!recursive && name.lastIndexOf('/') != basePackageFilePath.length()) {
+        continue;
+      }
+
+      if (packagePredicate != null) {
+        String jarPackageName = name.substring(0, name.lastIndexOf('/')).replace("/", ".");
+        if (!packagePredicate.test(jarPackageName)) {
+          continue;
+        }
+      }
+
+      // 判定是否符合过滤条件
+      String className = name.replace('/', '.');
+      className = className.substring(0, className.length() - 6);
+      // 用当前线程的类加载器加载类
+      Class<?> loadClass = Thread.currentThread().getContextClassLoader().loadClass(className);
+      if (classPredicate == null || classPredicate.test(loadClass)) {
+        classes.add(loadClass);
+      }
+
+    }
+  }
+
   /**
    * 在文件夹中扫描包和类
    */
-  private void doScanPackageClassesByFile(Set<Class<?>> classes, String packageName, String packagePath,
-    boolean recursive) throws ClassNotFoundException {
+  private void doScanPackageClassesByFile(Set<Class<?>> classes, String packageName, String packagePath)
+    throws ClassNotFoundException {
     // 转为文件
     File dir = new File(packagePath);
     if (!dir.exists() || !dir.isDirectory()) {
       return;
     }
-    final boolean fileRecursive = recursive;
     // 列出文件，进行过滤
     // 自定义文件过滤规则
     File[] dirFiles = dir.listFiles((FileFilter) file -> {
       String filename = file.getName();
 
       if (file.isDirectory()) {
-        if (!fileRecursive) {
+        if (!recursive) {
           return false;
         }
 
@@ -311,7 +285,7 @@ public class ClassScanner {
     for (File file : dirFiles) {
       if (file.isDirectory()) {
         // 如果是目录，则递归
-        doScanPackageClassesByFile(classes, packageName + "." + file.getName(), file.getAbsolutePath(), recursive);
+        doScanPackageClassesByFile(classes, packageName + "." + file.getName(), file.getAbsolutePath());
       } else {
         // 用当前类加载器加载 去除 fileName 的 .class 6 位
         String className = file.getName().substring(0, file.getName().length() - 6);
@@ -323,4 +297,6 @@ public class ClassScanner {
     }
   }
 }
+
 ```
+
