@@ -9,7 +9,7 @@
 - [安装@vue/cli](#安装vuecli)
 - [创建 Vue 项目](#创建-vue-项目)
 - [项目结构](#项目结构)
-- [got](#got)
+- [git](#git)
 - [参考](#参考)
 
 当你看到这篇文章的时候，暂且认为你对如何做一个网站有了兴趣.
@@ -97,8 +97,7 @@ $ vue ui
 
 通过 `vscode` 打开这个项目，发现多了 `plugins` 目录，这里面放了插件的默认配置，查看 `main.js`, 可以看出 `vue-router`、`store`、`elementui` 和 `axios` 已经进行了默认配置，是不是比我们手动配置香了了呢，她香了
 
-# got
-
+# git
 
 - github: https://github.com/zhangyunan1994/kola
 - gitee: https://gitee.com/zhangyunan1994/kola
