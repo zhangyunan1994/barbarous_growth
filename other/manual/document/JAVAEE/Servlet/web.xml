@@ -1,0 +1,22 @@
+一些关于web.xml中的标签说明！
+<servlet><!--servlet标签-->
+	<servlet-name>自定义名称(kevin)</servlet-name>
+	<servlet-class>真实class文件路径(com.test.index)</servlet-class>
+	<init-param><!--init-param标签给指定servlet初始化参数-->
+		<param-name>值名称</param-name>
+		<param-value>具体值</param-value>
+	</init-param>
+	<load-on-startup>0</load-on-startup>//是否让servlet对象延迟加载。如果是非负数.那么就启动服务器的时候创建：0.其实也是一个等级。
+</servlet>
+------------------------------------------------------------------
+<servlet-mapping><!--sevlet-mapping标签-->
+	<servlet-name>某个servlet标签中的name(kevin)</servlet-name>
+	<url-pattern>虚拟的访问地址(/Demo/Test/index.php)</url-pattern>
+</servlet-mapping>
+------------------------------------------------------------------
+<context-param><!--contest-param标签可以给所有servlet初始化参数(共享)-->
+	<param-name>值名称</param-name>
+	<param-value>具体值</param-value>
+</context-param>
+------------------------------------------------------------------
+------------------------------------------------------------------
