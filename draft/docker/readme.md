@@ -10,20 +10,22 @@ Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级�
 - [1. 应用场景](#1-应用场景)
 - [2. 优点](#2-优点)
 - [3. 下载和安装](#3-下载和安装)
-    - [3.1. Docker for Mac](#31-docker-for-mac)
-    - [3.2. Docker for Linux](#32-docker-for-linux)
-    - [3.3. Docker for Windows](#33-docker-for-windows)
+  - [3.1. Docker for Mac](#31-docker-for-mac)
+  - [3.2. Docker for Linux](#32-docker-for-linux)
+  - [3.3. Docker for Windows](#33-docker-for-windows)
 - [4. 使用终端查看 `docker` 的状态](#4-使用终端查看-docker-的状态)
 
 <!-- /TOC -->
 
 # 1. 应用场景
+
 - Web 应用的自动化打包和发布。
 - 自动化测试和持续集成、发布。
 - 在服务型环境中部署和调整数据库或其他的后台应用。
 - 从头编译或者扩展现有的OpenShift或Cloud Foundry平台来搭建自己的PaaS环境。
 
 # 2. 优点
+
 1. 简化程序：
 
   Docker 让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上，便可以实现虚拟化。Docker改变了虚拟化的方式，使开发者可以直接将自己的成果放入Docker中进行管理。方便快捷已经是 Docker的最大优势，过去需要用数天乃至数周的	任务，在Docker容器的处理下，只需要数秒就能完成。
